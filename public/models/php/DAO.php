@@ -33,6 +33,24 @@ class DAO
         }
     }
 
+    /*
+        Doc about how we will use all the following methods:
+
+        @param $table: the table name
+        @param $values: an array of values that are separated by a comma
+
+
+
+    */
+
+
+
+
+    public function insertInto($table, $values)
+    {
+
+    }
+
     public function __destruct()
     {
         $this->pdo = null;
