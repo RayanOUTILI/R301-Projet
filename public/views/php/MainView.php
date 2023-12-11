@@ -23,9 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } catch (PDOException $e) {
         die("Erreur de connexion à la base de données : " . $e->getMessage());
     }
+    
 
     try {
-        $stmt = $bdd->prepare("INSERT INTO personne (nom, prenom, age, adr_mail) VALUES (:nom, :prenom, :age, :adr_mail)");
+        $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, age, mail) VALUES (:nom, :prenom, :age, :adr_mail)");
         $stmt->bindParam(":adr_mail", $adr_mail);
         $stmt->bindParam(":nom", $nom);
         $stmt->bindParam(":prenom", $prenom);
@@ -34,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         echo "L'utilisateur a été créé avec succès !";
 
-        header("Location: connexion.php");
+        // header("Location: connexion.php");
         exit();
     } catch (PDOException $e) {
         $erreur = true;
