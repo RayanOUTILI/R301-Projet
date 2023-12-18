@@ -1,0 +1,49 @@
+.box-message{
+    width: 60%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background-color: yellow;
+    margin: 2% auto;
+    height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.box-message .left-message{
+    width: 40%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+}
+
+.box-message .left-message .send-to{
+    background-color: rgb(105, 227, 255); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 80%;
+    border-radius: 20px;
+    margin-top: 15px;
+}
+
+.box-message .left-message .contact{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.box-message .left-message .contact .discussion-item{
+    border-top: 1px solid rgb(0, 0, 0);
+    width: 100%;
+}
+
+.box-message .left-message .contact .discussion-item:hover{
+    background-color: rgb(215, 215, 255);
+    cursor: pointer;
+}
+
+.box-message .right-message{
+    width: 60%;
+    height: 100%;
+    background-color: rgb(215, 215, 255);
+}
