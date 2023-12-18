@@ -1,6 +1,6 @@
 <?php 
 
-require './public/config/Config.php';
+require '../../config/Config.php';
 class DAO
 {
     protected $dbHost = "";

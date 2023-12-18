@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/../../config/Config.php';
+
+require "../../controllers/php/MainController.php";
+
+$controller = new MainController();
 
 $erreur = false;
 $messageErreur = "";
@@ -10,37 +13,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $age = $_POST['age'];
     $adr_mail = $_POST['adr_mail'];
 
+    $controller->getMainDao()->insertInto("utilisateurs", "'$nom', '$prenom', '$adr_mail', '$age'");
 
-    $host = "linserv-info-01.campus.unice.fr";
-    $db_name = "or201305_R301-Projet";
-    $username = "or201305";
-    $password = "s]3zY[KhQ54(*qC0";
-    
-    try {
-        $pdo = new PDO("mysql:host=$host;dbname=$db_name", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "Connexion réussie";
-    } catch (PDOException $e) {
-        die("Erreur de connexion à la base de données : " . $e->getMessage());
-    }
+    $controller->getMainDao()->selectAllFrom("utilisateurs");
+
+  
+
+
     
 
-    try {
-        $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, age, mail) VALUES (:nom, :prenom, :age, :adr_mail)");
-        $stmt->bindParam(":adr_mail", $adr_mail);
-        $stmt->bindParam(":nom", $nom);
-        $stmt->bindParam(":prenom", $prenom);
-        $stmt->bindParam(":age", $age);
-        $stmt->execute();
-
-        echo "L'utilisateur a été créé avec succès !";
-
-        // header("Location: connexion.php");
-        exit();
-    } catch (PDOException $e) {
-        $erreur = true;
-        $messageErreur = "Erreur : " . $e->getMessage();
-    }
+  
 }
 
 ?>

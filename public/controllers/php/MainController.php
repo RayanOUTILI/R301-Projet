@@ -1,5 +1,5 @@
 <?php
-require './public/controllers/php/Controller.php';
+include __DIR__ . "/Controller.php";
 class MainController extends Controller 
 {
     public function __construct()

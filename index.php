@@ -13,8 +13,6 @@
 
 <?php
 
-$main = new MainController();
-
 
 
 ?>
