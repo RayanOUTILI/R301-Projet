@@ -8,9 +8,23 @@ CREATE TABLE utilisateurs (
     date_naissance DATE NOT NULL,
     adresse VARCHAR(255),
     telephone_portable VARCHAR(15),
+    photo_profil VARCHAR(255),
+    adresse_email_secours VARCHAR(255),
     role ENUM('membre', 'admin') DEFAULT 'membre', 
-    UNIQUE KEY (adresse_email)
+    UNIQUE KEY (adresse_email),
+    UNIQUE KEY (adresse_email_secours)
 );
+
+-- ajout champs photo_profil et adresse_email_secours
+ALTER TABLE utilisateurs DROP INDEX adresse_email;
+
+ALTER TABLE utilisateurs
+ADD COLUMN photo_profil VARCHAR(255),
+ADD COLUMN adresse_email_secours VARCHAR(255);
+
+ALTER TABLE utilisateurs
+ADD UNIQUE KEY (adresse_email, adresse_email_secours);
+
 
 -- Table des publications
 CREATE TABLE publications (
