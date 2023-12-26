@@ -17,6 +17,6 @@
 
 <?php
 
-require_once("public/views/php/form.php");
+require_once("public/views/php/feed.php");
 
 ?>
