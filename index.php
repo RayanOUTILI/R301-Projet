@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./public/views/css/main.css">
     <link rel="stylesheet" href="./public/views/css/nav.css">
+    <link rel="stylesheet" href="./public/views/css/feed.css">
+    <link rel="stylesheet" href="./public/views/css/user_profile.css">
+    <link rel="stylesheet" href="./public/views/css/people.css">
+    <link rel="stylesheet" href="./public/views/css/message.css">
+
     <title>Réseau social</title>
 </head>
 
@@ -18,6 +23,6 @@
 
 <?php
 
-require_once("public/views/php/feed.php");
+require_once("public/views/php/form.php");
 
 ?>
