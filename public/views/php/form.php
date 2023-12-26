@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./public/views/js/form.js"></script>
-    <link rel="stylesheet" href="./public/views/css/form.css">
+    <script src="/public/views/js/form.js"></script>
+    <link rel="stylesheet" href="/public/views/css/form.css">
     <title>Connexion</title>
 </head>
 

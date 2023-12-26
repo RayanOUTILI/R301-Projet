@@ -9,6 +9,8 @@
 </head>
 
 <body>
+    <?php include_once('nav.php'); ?>
+
     <div class="box-message">
 
         <div class="left-message">
