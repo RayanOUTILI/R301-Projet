@@ -1,6 +1,6 @@
 <?php
 
-require '../../models/php/DAO.php';
+require __DIR__ . '/../../models/php/DAO.php';
 abstract class Controller
 {
     protected $_model;

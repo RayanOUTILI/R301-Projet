@@ -4,43 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/public/views/js/form.js"></script>
-    <link rel="stylesheet" href="/public/views/css/form.css">
+    <script src="public/views/js/form.js"></script>
+    <link rel="stylesheet" href="public/views/css/form.css">
     <title>Connexion</title>
 </head>
 
 <?php
 
-// require "../../controllers/php/MainController.php";
+require __DIR__ . '/../../controllers/php/FormController.php';
 
-// $controller = new MainController();
+$formController = new FormController();
 
-// $erreur = false;
-// $messageErreur = "";
-
-// if ($_SERVER["REQUEST_METHOD"] === "POST") {
-//     $nom = $_POST['nom'];
-//     $prenom = $_POST['prenom'];
-//     $adresse_email = $_POST['adresse_email'];
-//     $email_secours = $_POST['email_secours'];
-//     $mot_de_passe = $_POST['mot_de_passe'];
-//     $adresse = $_POST['adresse'];
-//     $telephone_portable = $_POST['telephone_portable'];
-//     $date_naissance = $_POST['date_naissance'];
-//     $photo_profil = $_POST['photo_profil'];
-
-//     $controller->getMainDao()->insertInto("utilisateurs", "'$nom', '$prenom', '$adresse_email', '$email_secours', '$mot_de_passe', '$adresse', '$telephone_portable', '$date_naissance', '$photo_profil'");
-
-//     $controller->getMainDao()->selectAllFrom("utilisateurs");
-
-// }
 
 ?>
 
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="/public/controllers/php/Login.php" method="POST">
+            <form action="../../controllers/php/Login.php" method="POST">
                 <input type="text" placeholder="Nom" name="nom" />
                 <input type="text" placeholder="Prénom" name="prenom" />
                 <input type="email" placeholder="Mail" name="adresse_email" />
@@ -67,6 +48,8 @@
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
+                    <h1>Déjà inscrit ?</h1>
+                    <p>Connectez-vous !</p>
                     <button class="ghost" id="signIn">Connexion</button>
                 </div>
                 <div class="overlay-panel overlay-right">
