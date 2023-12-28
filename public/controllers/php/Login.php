@@ -1,4 +1,5 @@
 <?php
+/*
 require '../../config/Config.php';
 require '../../models/php/DAO.php';
 
@@ -27,9 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dao = new DAO(Config::DBHOST, Config::DBNAME, Config::DBUSERNAME, Config::DBPASSWORD);
 
     $values = "'$nom', '$prenom', '$adresse_email', '$email_secours', '$mot_de_passe', '$adresse', '$telephone_portable', '$date_naissance', '$chemin_photo_profil'";
-    $result = $dao->insertInto('utilisateurs', $values);
+    //$result = $dao->insertInto('utilisateurs', $values);
 
     header('Location: message.php');
     exit();
-}
+}*/
 ?>

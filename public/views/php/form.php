@@ -1,27 +1,11 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="public/views/js/form.js"></script>
-    <link rel="stylesheet" href="public/views/css/form.css">
-    <title>Connexion</title>
-</head>
-
 <?php
-
-require __DIR__ . '/../../controllers/php/FormController.php';
-
-$formController = new FormController();
-
-
+require_once __DIR__ . "/../../config/Config.php";
 ?>
 
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="../../controllers/php/Login.php" method="POST">
+            <form method="POST" action="index.php">
                 <input type="text" placeholder="Nom" name="nom" />
                 <input type="text" placeholder="Prénom" name="prenom" />
                 <input type="email" placeholder="Mail" name="adresse_email" />
@@ -31,19 +15,30 @@ $formController = new FormController();
                 <input type="text" placeholder="Téléphone portable" name="telephone_portable" />
                 <input type="date" placeholder="Date de naissance" name="date_naissance" />
                 <input type="file" accept="image/*" placeholder="Photo de profil" name="photo_profil" />
-                <button type="submit">S'inscrire</button>
+                <button type="submit" name="formulaire_inscription">S'inscrire</button>
             </form>
-
+            <?php
+                if(isset($_POST['formulaire_inscription']))
+                {
+                    $GLOBALS['action'] = "validateSignupForm";
+                }
+            ?>
         </div>
         <div class="form-container sign-in-container">
-            <form action="#">
+            <form method="POST" action="index.php">
                 <h1>Se connecter</h1>
                 <span>Entrer vos informations</span>
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
+                <input type="email" placeholder="Email" name="adresse_email"/>
+                <input type="password" placeholder="Mot de Passe" name="mot_de_passe"/>
                 <a href="#">Mot de passe oublié ?</a>
-                <button>Se connecter</button>
+                <button name="formulaire_connexion">Se connecter</button>
             </form>
+            <?php
+                if(isset($_POST['formulaire_connexion']))
+                {
+                    $GLOBALS['action'] = "validateLoginForm";
+                }
+                ?>
         </div>
         <div class="overlay-container">
             <div class="overlay">
@@ -59,8 +54,6 @@ $formController = new FormController();
                 </div>
             </div>
         </div>
-    </div>
+    </div>                
 
 </body>
-
-</html>

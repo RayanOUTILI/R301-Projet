@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,18 +10,18 @@
     <link rel="stylesheet" href="./public/views/css/user_profile.css">
     <link rel="stylesheet" href="./public/views/css/people.css">
     <link rel="stylesheet" href="./public/views/css/message.css">
+    <link rel="stylesheet" href="./public/views/css/form.css">
+    <script src="public/views/js/form.js"></script>
 
     <title>Réseau social</title>
 </head>
 
-<body>
+<?php
 
-</body>
+$GLOBALS['action'] = "";
+require_once __DIR__ . "/public/config/Config.php";
+
+?>
 
 </html>
 
-<?php
-
-require_once("public/views/php/form.php");
-
-?>
