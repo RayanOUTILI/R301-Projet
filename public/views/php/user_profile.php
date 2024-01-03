@@ -3,7 +3,6 @@
 <?php
 
 session_start();
-print_r($GLOBALS);
 if (isset($_SESSION['adresse_email'])) 
 {
     $adresse_email = $_SESSION['adresse_email'];

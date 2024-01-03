@@ -7,8 +7,6 @@ class Config
     const DBUSERNAME = "or201305";
     const DBPASSWORD = "s]3zY[KhQ54(*qC0";
 }
-
-
 $router = new Router();
-$router->route();
+setcookie("router", serialize($router), time() + 3600, "/");
 ?>

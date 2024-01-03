@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../../config/Config.php";
+$router = unserialize($_COOKIE['router']);
 ?>
 
 <body>
@@ -20,7 +21,7 @@ require_once __DIR__ . "/../../config/Config.php";
             <?php
                 if(isset($_POST['formulaire_inscription']))
                 {
-                    $GLOBALS['action'] = "validateSignupForm";
+                    $router->update("validateSignupForm");
                 }
             ?>
         </div>
@@ -36,7 +37,7 @@ require_once __DIR__ . "/../../config/Config.php";
             <?php
                 if(isset($_POST['formulaire_connexion']))
                 {
-                    $GLOBALS['action'] = "validateLoginForm";
+                    $router->update("validateLoginForm");
                 }
                 ?>
         </div>

@@ -18,11 +18,11 @@
 
     $GLOBALS['action'] = "";
     $GLOBALS['ROOT_PATH'] = __DIR__;
-    print_r($GLOBALS);
     ?>
 </head>
 <?php
 require_once __DIR__ . "/public/config/Config.php";
+
 ?>
 
 

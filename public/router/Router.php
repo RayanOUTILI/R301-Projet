@@ -1,49 +1,46 @@
 <?php
 
 require_once __DIR__ . "/../controllers/php/FormController.php";
+require_once __DIR__ . "/../controllers/php/PostController.php";
+require_once __DIR__ . "/../interfaces/IObserver.php";
 
-class Router
+class Router implements IObserver
 {
     private $formController;
+    private $postController;
 
     public function __construct()
     {
         $this->formController = new FormController();
+        $this->postController = new PostController();
+
+        $this->formController->attach($this);
+        $this->postController->attach($this);
     }
 
-    public function route()
+    public function update($data)
     {
-        if(isset($GLOBALS['action']))
+        switch($data)
         {
-            $action = $GLOBALS['action'];
-            switch($action)
-            {
-                case "validateLoginForm":
-                    $this->formController->validateLoginForm();
-                    break;
-                case "validateSignupForm":
-                    $this->formController->validateSignupForm();
-                    break;
-                case "loginConfirmed":
-                case "signupConfirmed":
-                    header("Location: /public/views/php/user_profile.php");
-                    break;
-                case "createNewPost":
-                    echo "Création d'un nouveau post";
-                    $this->formController->createNewPost();
-                    break;
-                default:
-                    $this->formController->validateLoginForm();
-                    break;
-            }
-        }
-        else
-        {
-            $this->formController->validateLoginForm();
+            case "validateLoginForm":
+                $this->formController->validateLoginForm();
+                break;
+            case "validateSignupForm":
+                $this->formController->validateSignupForm();
+                break;
+            case "loginConfirmed":
+            case "signupConfirmed":
+                header("Location: ./public/views/php/user_profile.php");
+                break;
+            case "createNewPost":
+                $this->postController->createNewPost();
+                break;
+            default:
+                break;
         }
     }
+
 
 
 }
-
 ?>
