@@ -118,11 +118,10 @@ class DAO
         $this->init_pdo();
         $query = "SELECT ";
         $fieldsQ = "";
-        foreach(explode(",",$fields) as $field)
-        {
+        foreach (explode(",", $fields) as $field) {
             $fieldsQ .= "$field,";
         }
-        $fieldsQ = substr($fieldsQ,0,-1);
+        $fieldsQ = substr($fieldsQ, 0, -1);
         $query .= $fieldsQ;
         $query .= " FROM $table WHERE $condition";
         $statement = $this->pdo->prepare($query);
@@ -225,6 +224,49 @@ class DAO
         $this->init_pdo();
         return $this->pdo->errorInfo();
     }
+
+    public function getPublication($userMail)
+    {
+        $this->init_pdo();
+        $query = "SELECT * FROM publication WHERE adresse_email = '$userMail'";
+        $query = "SELECT * FROM publications JOIN utilisateurs ON publications.id_utilisateur = utilisateurs.id_utilisateur WHERE utilisateurs.adresse_email = '$userMail'";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getLinkImages($idPost)
+    {
+        $this->init_pdo();
+        $query = "SELECT photo_url FROM images WHERE id_publication = '$idPost'";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function getNbLikes($idPost)
+    {
+        $this->init_pdo();
+        $query = "SELECT COUNT(*) AS nb_likes FROM appreciations WHERE id_publication = :id_post AND type = 'like'";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result['nb_likes'];
+    }
+
+    public function getNbComments($idPost)
+    {
+        $this->init_pdo();
+        $query = "SELECT COUNT(*) AS nb_comments FROM appreciations WHERE id_publication = :id_post AND commentaire IS NOT NULL";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result['nb_comments'];
+    }
+
 
     public function __destruct()
     {
