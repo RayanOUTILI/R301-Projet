@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html lang="fr">
+<?php
 
+session_start();
+print_r($GLOBALS);
+if (isset($_SESSION['adresse_email'])) 
+{
+    $adresse_email = $_SESSION['adresse_email'];
+    $nom = $_SESSION['nom'];
+    $prenom = $_SESSION['prenom'];
+    $adresse = $_SESSION['adresse'];
+    $telephone_portable = $_SESSION['telephone_portable'];
+    $date_naissance = $_SESSION['date_naissance'];
+}
+else
+{
+    header("Location: index.php");
+}
+
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/user_profile.css">
     <?php
-    echo "<title>Profile de $nom $prenom</title>"
+    echo "<title>Profil de $nom $prenom</title>"
         ?>
 </head>
 
@@ -18,14 +36,11 @@
         <div class="container">
             <div class="profile">
                 <div class="profile-image">
-                    <?php
-                    echo "<img src='$chemin_photo_profil' alt=''>";
-                    ?>
                     <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces"
                         alt="">
                 </div>
                 <div class="profile-user-settings">
-                    <h1 class="profile-user-name">nom</h1>
+                    <h1 class="profile-user-name"><?php echo $prenom ." ". $nom?></h1>
                     <button class="btn profile-edit-btn">Edit Profile</button>
                     <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog"
                             aria-hidden="true"></i></button>

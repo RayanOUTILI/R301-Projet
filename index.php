@@ -14,14 +14,17 @@
     <script src="public/views/js/form.js"></script>
 
     <title>Réseau social</title>
+    <?php
+
+    $GLOBALS['action'] = "";
+    $GLOBALS['ROOT_PATH'] = __DIR__;
+    print_r($GLOBALS);
+    ?>
 </head>
-
 <?php
-
-$GLOBALS['action'] = "";
 require_once __DIR__ . "/public/config/Config.php";
-
 ?>
+
 
 </html>
 

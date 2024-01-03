@@ -7,23 +7,23 @@
     </form>
     <ul>
         <li>
-            <a href="/public/views/php/form.php">
+            <a href="./user_profile.php">
                 <div class="icon">
-                    <img src="/assets/img/home.png" alt="Home">
+                    <img src="<?php echo $GLOBALS["ROOT_PATH"] . "/assets/img/profil.png"?>" alt="Home">
                 </div>
             </a>
         </li>
         <li>
-            <a href="/public/views/php/feed.php">
+            <a href="./feed.php">
                 <div class="icon">
-                    <img src="/assets/img/search.png" alt="Search">
+                    <img src="<?php echo __DIR__ . "/assets/img/feed_sample.webp"?>" alt="Search">
                 </div>
             </a>
         </li>
         <li>
-            <a href="/public/views/php/people.php">
+            <a href="./people.php">
                 <div class="icon">
-                    <img src="/assets/img/add.png" alt="Add">
+                    <img src="<?php echo __DIR__ . "/assets/img/add.png"?>" alt="Add">
                 </div>
             </a>
         </li>
@@ -35,7 +35,7 @@
             </a>
         </li>
         <li>
-            <a href="/public/views/php/user_profile.php">
+            <a href="./user_profile.php">
                 <div class="icon">
                     <img src="/assets/img/profil.png" alt="Profil">
                 </div>

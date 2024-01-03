@@ -26,7 +26,13 @@ class FormController extends Controller
                 $checkIfPasswordMatches = $this->getMainDao()->checkIfPasswordMatches("utilisateurs",$adresse_email,$mot_de_passe);
                 if($checkIfPasswordMatches == true)
                 {
-                    echo "Vous êtes connecté";
+                    session_start();
+                    $_SESSION['adresse_email'] = $adresse_email;
+                    $user_info = $this->getMainDao()->selectFrom("utilisateurs","nom,prenom,date_naissance,adresse,telephone_portable,adresse_email_secours,photo_profil","adresse_email = '$adresse_email'");
+                    $_SESSION = array_merge($_SESSION,$user_info[0]);
+
+                    
+                    
                     header("Location: ./public/views/php/user_profile.php");
                 
                 }

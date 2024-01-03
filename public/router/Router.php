@@ -26,7 +26,6 @@ class Router
                     break;
                 case "loginConfirmed":
                 case "signupConfirmed":
-                    echo "Confirmation de l'inscription ou de la connexion";
                     header("Location: /public/views/php/user_profile.php");
                     break;
                 default:

@@ -113,6 +113,34 @@ class DAO
         }
     }
 
+    /**
+     *  @author Thomas Portelette
+     *   
+     *  @param $table: the table name
+     *  @param $fields: a string of fields separated by a comma
+     *  @param $condition: the condition that must be met for the row to be selected (ex: "id = 1")
+     * 
+     * 
+     */
+
+    public function selectFrom($table, $fields, $condition)
+    {
+        $this->init_pdo();
+        $query = "SELECT ";
+        $fieldsQ = "";
+        foreach(explode(",",$fields) as $field)
+        {
+            $fieldsQ .= "$field,";
+        }
+        $fieldsQ = substr($fieldsQ,0,-1);
+        $query .= $fieldsQ;
+        $query .= " FROM $table WHERE $condition";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
     /** 
     *   @author Thomas Portelette
     *
