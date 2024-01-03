@@ -5,6 +5,7 @@ abstract class Controller
 {
     protected $_model;
     protected $_mainDao;
+    protected $_error;
     public function __construct()
     {
         $this->_mainDao = new DAO(Config::DBHOST, Config::DBNAME, Config::DBUSERNAME, Config::DBPASSWORD);
@@ -20,7 +21,12 @@ abstract class Controller
         return $this->_model;
     }
 
-    
+    public function getError()
+    {
+        return $this->_error;
+    }
+
+
 }
 
 ?>

@@ -29,6 +29,10 @@ class Router
                     echo "Confirmation de l'inscription ou de la connexion";
                     header("Location: /public/views/php/user_profile.php");
                     break;
+                case "createNewPost":
+                    echo "Création d'un nouveau post";
+                    $this->formController->createNewPost();
+                    break;
                 default:
                     $this->formController->validateLoginForm();
                     break;
