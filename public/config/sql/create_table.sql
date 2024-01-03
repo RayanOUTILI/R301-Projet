@@ -15,16 +15,6 @@ CREATE TABLE utilisateurs (
     UNIQUE KEY (adresse_email_secours)
 );
 
--- ajout champs photo_profil et adresse_email_secours
-ALTER TABLE utilisateurs DROP INDEX adresse_email;
-
-ALTER TABLE utilisateurs
-ADD COLUMN photo_profil VARCHAR(255),
-ADD COLUMN adresse_email_secours VARCHAR(255);
-
-ALTER TABLE utilisateurs
-ADD UNIQUE KEY (adresse_email, adresse_email_secours);
-
 
 -- Table des publications
 CREATE TABLE publications (
@@ -38,17 +28,6 @@ CREATE TABLE publications (
 );
 
 -- Table des images des publications 
-CREATE TABLE images_publication (
-    id_image INT AUTO_INCREMENT PRIMARY KEY,
-    id_publication INT,
-    photo_url VARCHAR(255),
-    FOREIGN KEY (id_publication) REFERENCES publications(id_publication)
-);
-
---(gérer plusieurs images par post))
-ALTER TABLE publications
-DROP COLUMN photo_url;
-
 CREATE TABLE images_publication (
     id_image INT AUTO_INCREMENT PRIMARY KEY,
     id_publication INT,
@@ -84,7 +63,6 @@ CREATE TABLE appreciations (
 --     FOREIGN KEY (id_utilisateur1) REFERENCES utilisateurs(id_utilisateur),
 --     FOREIGN KEY (id_utilisateur2) REFERENCES utilisateurs(id_utilisateur)
 -- );
-
 
 -- Table des administrateurs
 CREATE TABLE administrateurs (

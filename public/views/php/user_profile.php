@@ -11,13 +11,17 @@ if (isset($_SESSION['adresse_email']))
     $adresse = $_SESSION['adresse'];
     $telephone_portable = $_SESSION['telephone_portable'];
     $date_naissance = $_SESSION['date_naissance'];
-}
-else
+    $adresse_email_secours = $_SESSION['adresse_email_secours'];
+    $photo_profil = $_SESSION['photo_profil'];
+
+} 
+else 
 {
-    header("Location: index.php");
+    header("Location: index.php"); // à décommenter sur linserv
 }
 
 ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,25 +39,22 @@ else
         <div class="container">
             <div class="profile">
                 <div class="profile-image">
-                    <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces"
-                        alt="">
+                    <img src="../img/<?php echo $photo_profil ?>" alt="">
                 </div>
                 <div class="profile-user-settings">
-                    <h1 class="profile-user-name"><?php echo $prenom ." ". $nom?></h1>
+                    <h1 class="profile-user-name">
+                        <?php echo $prenom . " " . $nom ?>
+                    </h1>
                     <button class="btn profile-edit-btn">Edit Profile</button>
                     <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog"
                             aria-hidden="true"></i></button>
                 </div>
                 <div class="profile-stats">
                     <ul>
-                        <li><span class="profile-stat-count">x</span> posts</li>
+                        <li><span class="profile-stat-count">x</span> $nb_user_publications</li>
                         <li><span class="profile-stat-count">x</span> Abonnés</li>
                         <li><span class="profile-stat-count">x</span> Abonnements</li>
                     </ul>
-                </div>
-                <div class="profile-bio">
-                    <p><span class="profile-real-name">Rayan</span> Rayan Rayan Rayan Rayan Rayan Rayan Rayan Rayan
-                        Rayan</p>
                 </div>
             </div>
         </div>
@@ -63,19 +64,26 @@ else
 
         <div class="container">
             <div class="gallery">
-                <div class="gallery-item" tabindex="0">
-                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
-                        class="gallery-image" alt="">
-                    <div class="gallery-item-info">
-                        <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i
-                                    class="fas fa-heart" aria-hidden="true"></i> 56</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i
-                                    class="fas fa-comment" aria-hidden="true"></i> 2</li>
-                        </ul>
-                    </div>
+                <?php
+                foreach ($user_publications as $publication) {
+                    $link_img = $dao->getLinkImages($publication['id_publication']);
+                    $likes_count = $dao->getNbLikes($publication['id_publication']);
+                    $comments_count = $dao->getNbComments($publication['id_publication']);
+
+                    echo "<div class=\"gallery-item\" tabindex=\"0\">
+                <img src=\"$link_img\">
+                <div class=\"gallery-item-info\">
+                    <ul>
+                        <li class=\"gallery-item-likes\"><span class=\"visually-hidden\">Likes:</span><i class=\"fas fa-heart\" aria-hidden=\"true\"></i> $likes_count</li>
+                        <li class=\"gallery-item-comments\"><span class=\"visually-hidden\">Comments:</span><i class=\"fas fa-comment\" aria-hidden=\"true\"></i> $comments_count</li>
+                    </ul>
                 </div>
-                <div class="gallery-item" tabindex="0">
+              </div>";
+                }
+                ?>
+            </div>
+
+            <!-- <div class="gallery-item" tabindex="0">
                     <img src="https://images.unsplash.com/photo-1497445462247-4330a224fdb1?w=500&h=500&fit=crop"
                         class="gallery-image" alt="">
                     <div class="gallery-item-info">
@@ -118,8 +126,7 @@ else
                                     class="fas fa-comment" aria-hidden="true"></i> 0</li>
                         </ul>
                     </div>
-                </div>
-            </div>
+                </div> -->
         </div>
     </main>
 </body>
