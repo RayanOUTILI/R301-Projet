@@ -32,11 +32,36 @@ CREATE TABLE publications (
     id_utilisateur INT,
     titre VARCHAR(255),
     texte TEXT,
-    photo_url VARCHAR(255),
     visibilite ENUM('amis', 'public') DEFAULT 'amis',
     date_publication DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id_utilisateur)
 );
+
+-- Table des images des publications 
+CREATE TABLE images_publication (
+    id_image INT AUTO_INCREMENT PRIMARY KEY,
+    id_publication INT,
+    photo_url VARCHAR(255),
+    FOREIGN KEY (id_publication) REFERENCES publications(id_publication)
+);
+
+--(gérer plusieurs images par post))
+ALTER TABLE publications
+DROP COLUMN photo_url;
+
+CREATE TABLE images_publication (
+    id_image INT AUTO_INCREMENT PRIMARY KEY,
+    id_publication INT,
+    photo_url VARCHAR(255),
+    FOREIGN KEY (id_publication) REFERENCES publications(id_publication)
+);
+
+
+ALTER TABLE images_publication
+ADD CONSTRAINT fk_images_publication_publications
+FOREIGN KEY (id_publication) REFERENCES publications(id_publication);
+
+
 
 -- Table des appréciations (like/dislike)
 CREATE TABLE appreciations (

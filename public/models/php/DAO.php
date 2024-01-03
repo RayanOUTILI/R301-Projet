@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once __DIR__ . '/../../config/Config.php';
 class DAO
@@ -22,32 +22,28 @@ class DAO
 
     private function init_pdo()
     {
-        if ($this->pdo == null)
-        {
-           try
-           {
-               $this->pdo = new PDO($this->databaseConnectionString);
-               $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-           }
-           catch (PDOException $e)
-           {
-               echo $e->getMessage();
-           }
+        if ($this->pdo == null) {
+            try {
+                $this->pdo = new PDO($this->databaseConnectionString);
+                $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
         }
     }
-    
+
 
 
     /**
-    *   @author Thomas Portelette
-    *
-    *   @param $table: the table name
-    *
-    *   Selects all the rows from a table
-    *
-    */
+     *   @author Thomas Portelette
+     *
+     *   @param $table: the table name
+     *
+     *   Selects all the rows from a table
+     *
+     */
 
-    
+
     public function selectAllFrom($table)
     {
         $this->init_pdo();
@@ -59,14 +55,14 @@ class DAO
     }
 
     /**
-    *
-    *   @author Thomas Portelette
-    *
-    *   @param $table: the table name	
-    *   @param $email: the email address we want to check the existence of
-    *
-    *   Checks if an email address exists in the database, returns true if it does, false if it doesn't
-    */
+     *
+     *   @author Thomas Portelette
+     *
+     *   @param $table: the table name	
+     *   @param $email: the email address we want to check the existence of
+     *
+     *   Checks if an email address exists in the database, returns true if it does, false if it doesn't
+     */
 
     public function checkIfEmailExists($table, $email)
     {
@@ -75,26 +71,23 @@ class DAO
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if (count($result) > 0)
-        {
+        if (count($result) > 0) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
     /** 
-    *   @author Thomas Portelette
-    *
-    *   @param $table: the table name
-    *   @param $email: the email address we want to check the existence of
-    *   @param $password: the password we want to check the match of
-    *
-    *   Checks if a password matches the email address in the database, returns true if it does, false if it doesn't
-    *
-    */
+     *   @author Thomas Portelette
+     *
+     *   @param $table: the table name
+     *   @param $email: the email address we want to check the existence of
+     *   @param $password: the password we want to check the match of
+     *
+     *   Checks if a password matches the email address in the database, returns true if it does, false if it doesn't
+     *
+     */
 
     public function checkIfPasswordMatches($table, $email, $password)
     {
@@ -103,12 +96,9 @@ class DAO
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if (count($result) > 0)
-        {
+        if (count($result) > 0) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -142,36 +132,34 @@ class DAO
     }
 
     /** 
-    *   @author Thomas Portelette
-    *
-    *   @param $table: the table name
-    *   @param $fields: an array of fields 
-    *   @param $values: an array of values 
-    *
-    *   Inserts a row into a table
-    *
-    */
+     *   @author Thomas Portelette
+     *
+     *   @param $table: the table name
+     *   @param $fields: an array of fields 
+     *   @param $values: an array of values 
+     *
+     *   Inserts a row into a table
+     *
+     */
 
 
-    public function insertInto($table,$fields,$values)
+    public function insertInto($table, $fields, $values)
     {
         $this->init_pdo();
 
         $query = "INSERT INTO $table (";
         $fieldsQ = "";
-        foreach($fields as $field)
-        {
+        foreach ($fields as $field) {
             $fieldsQ .= "$field,";
         }
-        $fieldsQ = substr($fieldsQ,0,-1);
+        $fieldsQ = substr($fieldsQ, 0, -1);
         $query .= $fieldsQ;
         $query .= ") VALUES (";
         $valuesQ = "";
-        foreach($values as $value)
-        {
+        foreach ($values as $value) {
             $valuesQ .= "'$value',";
         }
-        $valuesQ = substr($valuesQ,0,-1);
+        $valuesQ = substr($valuesQ, 0, -1);
         $query .= $valuesQ;
         $query .= ");";
         $statement = $this->pdo->prepare($query);
@@ -181,15 +169,15 @@ class DAO
     }
 
     /** 
-    *   @author Thomas Portelette
-    *
-    *   @param $table: the table name
-    *   @param $values: an array of values that are separated by a comma and surrounded by simple quotes
-    *   @param $condition: the condition that must be met for the row to be updated
-    * 
-    *   Updates a row from a table
-    *
-    */
+     *   @author Thomas Portelette
+     *
+     *   @param $table: the table name
+     *   @param $values: an array of values that are separated by a comma and surrounded by simple quotes
+     *   @param $condition: the condition that must be met for the row to be updated
+     * 
+     *   Updates a row from a table
+     *
+     */
 
     public function update($table, $values, $condition)
     {
@@ -203,14 +191,14 @@ class DAO
 
 
     /** 
-    *   @author Thomas Portelette
-    *
-    *   @param $table: the table name
-    *   @param $condition: the condition that must be met for the row to be deleted
-    *
-    *   Deletes a row from a table
-    */
-    
+     *   @author Thomas Portelette
+     *
+     *   @param $table: the table name
+     *   @param $condition: the condition that must be met for the row to be deleted
+     *
+     *   Deletes a row from a table
+     */
+
 
     public function deleteFrom($table, $condition)
     {
@@ -220,6 +208,22 @@ class DAO
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+
+    public function getLastInsertedId()
+    {
+        $this->init_pdo();
+        $query = "SELECT LAST_INSERT_ID()";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result[0]['LAST_INSERT_ID()'];
+    }
+
+    public function getError()
+    {
+        $this->init_pdo();
+        return $this->pdo->errorInfo();
     }
 
     public function __destruct()
