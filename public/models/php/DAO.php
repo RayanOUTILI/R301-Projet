@@ -267,6 +267,33 @@ class DAO
         return $result['nb_comments'];
     }
 
+    public function getNbPublications()
+    {
+        $this->init_pdo();
+        $query = "SELECT COUNT(*) AS nb_publications FROM publications";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result['nb_publications'];
+    }
+
+    public function getPaginatedPublications($postsPerPage, $currentPage)
+    {
+        $this->init_pdo();
+        // on calcule le nombre de publications à sauter
+        $offset = ($currentPage - 1) * $postsPerPage; 
+
+        $query = "SELECT * FROM publications LIMIT :offset, :limit";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $statement->bindParam(':limit', $postsPerPage, PDO::PARAM_INT);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
 
     public function __destruct()
     {
