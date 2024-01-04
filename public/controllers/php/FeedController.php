@@ -14,6 +14,27 @@ class FeedController extends Controller
 
     public function render()
     {
+        session_start();
+        $totalPublications = $this->getMainDao()->getNbPublications($_SESSION['adresse_email']);
+        $postsPerPage = 5;
+        $totalPages = ceil($totalPublications / $postsPerPage);
+        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $totalPages) {
+            $currentPage = $_GET['page'];
+        } else {
+            $currentPage = 1;
+        }
+        $limited_publications = $this->getMainDao()->getPaginatedPublications($postsPerPage, $currentPage); //on limite le nombre de publications à 5 par page
+        foreach ($limited_publications as &$publication) 
+        {
+            $publication["link_img"] = $this->_mainDao->getLinkImages($publication['id_publication']);
+            $publication["likes_count"] = $this->_mainDao->getNbLikes($publication['id_publication']);
+            $publication["comments_count"] = $this->_mainDao->getNbComments($publication['id_publication']);
+        }
+        $GLOBALS['limited_publications'] = $limited_publications;
+        $GLOBALS['totalPages'] = $totalPages;
+        $GLOBALS['currentPage'] = $currentPage;
+        
+
         $this->FeedView->render();
         // session_start();
         // if (isset($_SESSION['adresse_email'])) {

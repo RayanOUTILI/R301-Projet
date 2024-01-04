@@ -3,7 +3,6 @@
 
 
 <?php
-session_start();
 if (isset($_SESSION['adresse_email'])) {
     $adresse_email = $_SESSION['adresse_email'];
     $nom = $_SESSION['nom'];
@@ -13,19 +12,13 @@ if (isset($_SESSION['adresse_email'])) {
     $date_naissance = $_SESSION['date_naissance'];
     $adresse_email_secours = $_SESSION['adresse_email_secours'];
     $photo_profil = $_SESSION['photo_profil'];
+    $totalPages = $GLOBALS['totalPages'];
+    $currentPage = $GLOBALS['currentPage'];
+    $limited_publications = $GLOBALS['limited_publications'];
 
-    $totalPublications = $dao->getNbPublications($adresse_email);
-    $postsPerPage = 5;
-    $totalPages = ceil($totalPublications / $postsPerPage);
-
-    if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $totalPages) {
-        $currentPage = $_GET['page'];
-    } else {
-        $currentPage = 1;
-    }
-
-    $limited_publications = $dao->getPaginatedPublications($postsPerPage, $currentPage); //on limite le nombre de publications à 5 par page
-} else {
+} 
+else 
+{
     header("Location: index.php?action=form");
 }
 ?>
@@ -34,11 +27,11 @@ if (isset($_SESSION['adresse_email'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/feed.css">
-    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="public/views/css/feed.css">
+    <link rel="stylesheet" href="public/views/css/nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../js/pagination.js"></script>
+    <script src="public/views/js/pagination.js"></script>
     <title>Feed</title>
 </head>
 
@@ -59,9 +52,9 @@ if (isset($_SESSION['adresse_email'])) {
                 $idPost = $publication['id_publication'];
                 $textePost = $publication['texte'];
                 $datePost = $publication['date_publication'];
-                $likesCount = $dao->getNbLikes($idPost);
-                $commentsCount = $dao->getNbComments($idPost);
-                $images = $dao->getLinkImages($idPost);
+                $likesCount = $publication['likes_count'];
+                $commentsCount = $publication['comments_count'];
+                $images = $publication['link_img'];
                 ?>
                 <!-- $nomAuteur = "Rayan Outili"; // .post-container $post->getNom() et $post->getPrenom()
                 $photoProfil = "/assets/img/like.png"; // .post-container $post->getPhotoProfil()
