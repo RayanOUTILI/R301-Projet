@@ -14,7 +14,7 @@ $root_path = str_replace("/www","", $root_path);
     </form>
     <ul>
         <li>
-            <a href="index.php?action=home">
+            <a href="index.php?action=feed">
                 <div class="icon">
                     <img src="<?php echo $root_path . "/assets/img/home.png"?>" alt="Home">
                 </div>
