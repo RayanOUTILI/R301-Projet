@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<?php
-require __DIR__ . "/headers/formheader.php";
-?>
+<head>
 
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="public/views/css/post.css">
+        <link rel="stylesheet" href="public/views/css/main.css">
+        <link rel="stylesheet" href="public/views/css/nav.css">
+        <title>Publier un psost</title>
+    </head>
 
 <body>
     <?php include_once('nav.php'); ?>

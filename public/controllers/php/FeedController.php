@@ -24,8 +24,10 @@ class FeedController extends Controller
             $currentPage = 1;
         }
         $limited_publications = $this->getMainDao()->getPaginatedPublications($postsPerPage, $currentPage); //on limite le nombre de publications à 5 par page
-        foreach ($limited_publications as &$publication) 
-        {
+        foreach ($limited_publications as &$publication) {
+            $publication["nom"] = $this->_mainDao->getAuthorSurname($publication['id_utilisateur']);
+            $publication["prenom"] = $this->_mainDao->getAuthorName($publication['id_utilisateur']);
+            $publication["photo_profil"] = $this->_mainDao->getAuthorPhoto($publication['id_utilisateur']);
             $publication["link_img"] = $this->_mainDao->getLinkImages($publication['id_publication']);
             $publication["likes_count"] = $this->_mainDao->getNbLikes($publication['id_publication']);
             $publication["comments_count"] = $this->_mainDao->getNbComments($publication['id_publication']);
@@ -33,7 +35,7 @@ class FeedController extends Controller
         $GLOBALS['limited_publications'] = $limited_publications;
         $GLOBALS['totalPages'] = $totalPages;
         $GLOBALS['currentPage'] = $currentPage;
-        
+
 
         $this->FeedView->render();
         // session_start();

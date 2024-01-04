@@ -16,9 +16,7 @@ if (isset($_SESSION['adresse_email'])) {
     $currentPage = $GLOBALS['currentPage'];
     $limited_publications = $GLOBALS['limited_publications'];
 
-} 
-else 
-{
+} else {
     header("Location: index.php?action=form");
 }
 ?>
@@ -28,6 +26,7 @@ else
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="public/views/css/feed.css">
+    <link rel="stylesheet" href="public/views/css/main.css">
     <link rel="stylesheet" href="public/views/css/nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -65,34 +64,31 @@ else
 
                 <div class="post-top">
                     <span class="avatar">
-                        <img src="<?php echo 'img/' . $photoProfil; ?>" alt="Avatar">
+                        <img src="<?php echo '/~or201305/R102/TD5/js/social-network/public/views/php' . '/' . $photoProfil; ?>"
+                            alt="Avatar">
                     </span>
                     <h1 class="title">
                         <p>
-                            <?php echo $nomAuteur . $prenomAuteur; ?>
+                            <?php echo $nomAuteur . ' ' . $prenomAuteur; ?>
                         </p>
                     </h1>
                 </div>
 
                 <div class="photo-post">
-                    <?php
-                    foreach ($images as $image) {
-                        ?>
-                        <img src="<?php echo 'img/' . $image['photo_url']; ?>" alt="Photo">
-                        <?php
-                    }
-                    ?>
+                    <img src="<?php echo '/~or201305/R102/TD5/js/social-network/public/views/php' . '/' . $images; ?>"
+                        alt="Photo">
+
                 </div>
 
                 <div class="post-middle">
                     <div class="icon like">
-                        <img src="/assets/img/like.png" alt="Like">
+                        <img src="<?php echo $root_path . "/assets/img/like.png" ?>" alt="Like">
                     </div>
                     <div class="icon comment">
-                        <img src="/assets/img/comment.png" alt="Comment">
+                        <img src="<?php echo $root_path . "/assets/img/comment.png" ?>" alt="Comment">
                     </div>
                     <div class="icon flag">
-                        <img src="/assets/img/bookmark.png" alt="Bookmark">
+                        <img src="<?php echo $root_path . "/assets/img/bookmark.png" ?>" alt="BookMark">
                     </div>
                 </div>
 

@@ -39,7 +39,7 @@ class PostController extends Controller
 
             $last_inserted_id = $this->getMainDao()->getLastInsertedId();
 
-            $upload_folder = 'uploads/';
+            $upload_folder = 'img/';
             $post_images = [];
             $file_name = $_POST['post_images'][0];
             $upload_path = $upload_folder . $file_name;

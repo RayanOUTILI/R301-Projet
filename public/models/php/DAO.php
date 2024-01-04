@@ -245,6 +245,39 @@ class DAO
         return $result['nb_likes'];
     }
 
+    public function getAuthorSurname($idPost)
+    {
+        $this->init_pdo();
+        $query = "SELECT nom FROM utilisateurs JOIN publications ON utilisateurs.id_utilisateur = publications.id_utilisateur WHERE publications.id_publication = :id_post";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result['nom'];
+    }
+
+    public function getAuthorName($idPost)
+    {
+        $this->init_pdo();
+        $query = "SELECT prenom FROM utilisateurs JOIN publications ON utilisateurs.id_utilisateur = publications.id_utilisateur WHERE publications.id_publication = :id_post";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result['prenom'];
+    }
+
+    public function getAuthorPhoto($idPost)
+    {
+        $this->init_pdo();
+        $query = "SELECT photo_profil FROM utilisateurs JOIN publications ON utilisateurs.id_utilisateur = publications.id_utilisateur WHERE publications.id_publication = :id_post";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result['photo_profil'];
+    }
+
     public function getNbComments($idPost)
     {
         $this->init_pdo();
