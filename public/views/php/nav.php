@@ -23,10 +23,10 @@ $root_path = str_replace("/www","", $root_path);
         <li>
             <a href="index.php?action=feed">
                 <div class="icon">
-                    <img src="<?php echo $root_path . "/assets/img/feed_sample.webp"?>" alt="Search">
+                    <img src="<?php echo $root_path . "/assets/img/seach.png"?>" alt="Search">
                 </div>
             </a>
-        </li>
+        </li>""
         <li>
             <a href="index.php?action=people">
                 <div class="icon">

@@ -45,7 +45,7 @@ require_once __DIR__ . "/headers/profileheader.php";
                 </div>
                 <div class="profile-stats">
                     <ul>
-                        <li><span class="profile-stat-count"><?php echo $GLOBALS["nb_user_publications"]?></span> Publications</li>
+                        <li><span class="profile-stat-count"><?php echo implode(" ",$GLOBALS["nb_user_publications"])?></span> Publications</li>
                         <li><span class="profile-stat-count">x</span> Abonnés</li>
                         <li><span class="profile-stat-count">x</span> Abonnements</li>
                     </ul>

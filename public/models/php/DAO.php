@@ -233,7 +233,7 @@ class DAO
     public function getLinkImages($idPost)
     {
         $this->init_pdo();
-        $query = "SELECT photo_url FROM images WHERE id_publication = '$idPost'";
+        $query = "SELECT photo_url FROM images_publication WHERE id_publication = '$idPost'";
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
