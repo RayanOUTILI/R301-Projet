@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./public/views/css/people.css">
     <link rel="stylesheet" href="./public/views/css/message.css">
     <link rel="stylesheet" href="./public/views/css/form.css">
-    <script src="public/views/js/form.js"></script>
+    <script src="./public/views/js/form.js"></script>
 
     <title>Réseau social</title>
 </head>

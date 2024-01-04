@@ -14,6 +14,7 @@ if (isset($_SESSION['adresse_email']))
 
 } 
 require_once __DIR__ . "/headers/profileheader.php";
+
 ?>
 
 
@@ -60,9 +61,9 @@ require_once __DIR__ . "/headers/profileheader.php";
             <div class="gallery">
                 <?php
                 foreach ($GLOBALS["user_publications"] as $publication) {
-                    $link_img = $GLOBALS[$publication]["link_img"];
-                    $likes_count = $GLOBALS[$publication]["likes_count"];
-                    $comments_count = $GLOBALS[$publication]["comments_count"];
+                    $link_img = $publication["link_img"];
+                    $likes_count = $publication["likes_count"];
+                    $comments_count = $publication["comments_count"];
 
                     echo "<div class=\"gallery-item\" tabindex=\"0\">
                 <img src=\"$link_img\">

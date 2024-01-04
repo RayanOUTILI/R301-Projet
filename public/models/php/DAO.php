@@ -237,7 +237,14 @@ class DAO
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
+        if($result)
+        {
+            return $result[0]['photo_url'];
+        }
+        else
+        {
+            return "";
+        }
     }
     public function getNbLikes($idPost)
     {
@@ -270,7 +277,7 @@ class DAO
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         if($result)
         {
-            return $result;
+            return $result['nb_publications'];
         }
         else
         {

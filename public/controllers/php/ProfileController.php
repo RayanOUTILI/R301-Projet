@@ -16,20 +16,17 @@ class ProfileController extends Controller
     {
         session_start();
         $GLOBALS["nb_user_publications"] = $this->_mainDao->getNbPublications($_SESSION['id_utilisateur']);
-        $user_publications = $this->_mainDao->getPublication($_SESSION['adresse_email']);
-        $GLOBALS["user_publications"] = array();
-        foreach ($user_publications as $user_publication) {
-            $GLOBALS["user_publications"][] = $user_publication;
+        $user_publications = $this->_mainDao->getPublication($_SESSION['adresse_email']); 
+        foreach ($user_publications as &$publication) 
+        {
+            $publication["link_img"] = $this->_mainDao->getLinkImages($publication['id_publication']);
+            $publication["likes_count"] = $this->_mainDao->getNbLikes($publication['id_publication']);
+            $publication["comments_count"] = $this->_mainDao->getNbComments($publication['id_publication']);
         }
-        foreach ($user_publications as $publication) {
-            $link_img = $this->_mainDao->getLinkImages($user_publications['id_publication']);
-            $GLOBALS[$publication]["link_img"] = (string) $link_img;
-            $likes_count = $this->_mainDao->getNbLikes($user_publications['id_publication']);
-            $GLOBALS[$publication]["likes_count"] = $likes_count;
-            $comments_count = $this->_mainDao->getNbComments($user_publications['id_publication']);
-            $GLOBALS[$publication]["comments_count"] = $comments_count;
-        }
+        
 
+        $GLOBALS["user_publications"] = $user_publications;
+       
         $this->profileView->render();
 
     }
