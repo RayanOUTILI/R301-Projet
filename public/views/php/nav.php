@@ -1,7 +1,7 @@
 <?php
 $root_path = __DIR__ . "/../../..";
-$root_path = str_replace("home/","~", $root_path);
-$root_path = str_replace("/www","", $root_path);
+$root_path = str_replace("home/", "~", $root_path);
+$root_path = str_replace("/www", "", $root_path);
 
 ?>
 
@@ -16,35 +16,35 @@ $root_path = str_replace("/www","", $root_path);
         <li>
             <a href="index.php?action=feed">
                 <div class="icon">
-                    <img src="<?php echo $root_path . "/assets/img/home.png"?>" alt="Home">
+                    <img src="<?php echo $root_path . "/assets/img/home.png" ?>" alt="Home">
                 </div>
             </a>
         </li>
         <li>
             <a href="index.php?action=feed">
                 <div class="icon">
-                    <img src="<?php echo $root_path . "/assets/img/feed_sample.webp"?>" alt="Search">
+                    <img src="<?php echo $root_path . "/assets/img/search.png" ?>" alt="Search">
                 </div>
             </a>
         </li>
         <li>
-            <a href="index.php?action=people">
+            <a href="index.php?action=post">
                 <div class="icon">
-                    <img src="<?php echo $root_path . "/assets/img/add.png"?>" alt="Add">
+                    <img src="<?php echo $root_path . "/assets/img/add.png" ?>" alt="Add">
                 </div>
             </a>
         </li>
         <li>
             <a href="index.php?action=likes">
                 <div class="icon">
-                    <img src="<?php echo $root_path . "/assets/img/heart.png"?>" alt="Heart">
+                    <img src="<?php echo $root_path . "/assets/img/heart.png" ?>" alt="Heart">
                 </div>
             </a>
         </li>
         <li>
             <a href="index.php?action=profile">
                 <div class="icon">
-                    <img src="<?php echo $root_path . "/assets/img/profil.png"?>" alt="Profil">
+                    <img src="<?php echo $root_path . "/assets/img/profil.png" ?>" alt="Profil">
                 </div>
             </a>
         </li>

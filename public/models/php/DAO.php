@@ -22,15 +22,11 @@ class DAO
 
     private function init_pdo()
     {
-        if ($this->pdo == null) 
-        {
-            try 
-            {
+        if ($this->pdo == null) {
+            try {
                 $this->pdo = new PDO($this->databaseConnectionString);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } 
-            catch (PDOException $e) 
-            {
+            } catch (PDOException $e) {
                 echo $e->getMessage();
             }
         }
@@ -93,11 +89,9 @@ class DAO
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if (count($result) > 0) 
-        {
+        if (count($result) > 0) {
             return true;
-        } else 
-        {
+        } else {
             return false;
         }
     }
@@ -115,8 +109,7 @@ class DAO
         $this->init_pdo();
         $query = "SELECT ";
         $fieldsQ = "";
-        foreach (explode(",", $fields) as $field) 
-        {
+        foreach (explode(",", $fields) as $field) {
             $fieldsQ .= "$field,";
         }
         $fieldsQ = substr($fieldsQ, 0, -1);
@@ -144,16 +137,14 @@ class DAO
 
         $query = "INSERT INTO $table (";
         $fieldsQ = "";
-        foreach ($fields as $field) 
-        {
+        foreach ($fields as $field) {
             $fieldsQ .= "$field,";
         }
         $fieldsQ = substr($fieldsQ, 0, -1);
         $query .= $fieldsQ;
         $query .= ") VALUES (";
         $valuesQ = "";
-        foreach ($values as $value) 
-        {
+        foreach ($values as $value) {
             $valuesQ .= "'$value',";
         }
         $valuesQ = substr($valuesQ, 0, -1);
@@ -237,12 +228,9 @@ class DAO
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if($result)
-        {
+        if ($result) {
             return $result[0]['photo_url'];
-        }
-        else
-        {
+        } else {
             return "";
         }
     }
@@ -268,29 +256,26 @@ class DAO
         return $result['nb_comments'];
     }
 
-    public function getNbPublications($id_utilisateur)
+    public function getNbPublications($user_mail)
     {
         $this->init_pdo();
-        $query = "SELECT COUNT(*) AS nb_publications FROM publications GROUP BY id_utilisateur HAVING id_utilisateur = '$id_utilisateur'";
+        $query = "SELECT COUNT(*) AS nb_publications FROM publications JOIN utilisateurs ON publications.id_utilisateur = utilisateurs.id_utilisateur WHERE utilisateurs.adresse_email = '$user_mail'";
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        if($result)
-        {
+        if ($result) {
             return $result['nb_publications'];
-        }
-        else
-        {
+        } else {
             return 0;
         }
     }
- 
+
 
     public function getPaginatedPublications($postsPerPage, $currentPage)
     {
         $this->init_pdo();
         // on calcule le nombre de publications à sauter
-        $offset = ($currentPage - 1) * $postsPerPage; 
+        $offset = ($currentPage - 1) * $postsPerPage;
 
         $query = "SELECT * FROM publications LIMIT :offset, :limit";
         $statement = $this->pdo->prepare($query);

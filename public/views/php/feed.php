@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 
+
 <?php
 session_start();
 if (isset($_SESSION['adresse_email'])) {
@@ -13,7 +14,7 @@ if (isset($_SESSION['adresse_email'])) {
     $adresse_email_secours = $_SESSION['adresse_email_secours'];
     $photo_profil = $_SESSION['photo_profil'];
 
-    $totalPublications = $dao->getTotalPublications();
+    $totalPublications = $dao->getNbPublications($adresse_email);
     $postsPerPage = 5;
     $totalPages = ceil($totalPublications / $postsPerPage);
 
@@ -24,9 +25,11 @@ if (isset($_SESSION['adresse_email'])) {
     }
 
     $limited_publications = $dao->getPaginatedPublications($postsPerPage, $currentPage); //on limite le nombre de publications à 5 par page
-} 
-
+} else {
+    header("Location: index.php?action=form");
+}
 ?>
+
 
 <head>
     <meta charset="UTF-8">
