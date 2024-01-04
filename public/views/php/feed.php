@@ -28,6 +28,7 @@ if (isset($_SESSION['adresse_email'])) {
     <link rel="stylesheet" href="public/views/css/feed.css">
     <link rel="stylesheet" href="public/views/css/main.css">
     <link rel="stylesheet" href="public/views/css/nav.css">
+    <link rel="stylesheet" href="public/views/css/pagination.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="public/views/js/pagination.js"></script>
