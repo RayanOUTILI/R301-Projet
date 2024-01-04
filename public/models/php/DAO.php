@@ -233,11 +233,18 @@ class DAO
     public function getLinkImages($idPost)
     {
         $this->init_pdo();
-        $query = "SELECT photo_url FROM images WHERE id_publication = '$idPost'";
+        $query = "SELECT photo_url FROM images_publication WHERE id_publication = '$idPost'";
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
+        if($result)
+        {
+            return $result[0]['photo_url'];
+        }
+        else
+        {
+            return "";
+        }
     }
     public function getNbLikes($idPost)
     {
@@ -270,7 +277,7 @@ class DAO
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         if($result)
         {
-            return $result;
+            return $result['nb_publications'];
         }
         else
         {

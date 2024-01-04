@@ -25,7 +25,6 @@ class Router
             switch ($_GET["action"])
             {
                 case "form":
-                    echo "form";
                     $this->formController->render();
                     break;
                 case "login":
