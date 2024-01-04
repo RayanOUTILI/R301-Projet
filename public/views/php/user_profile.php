@@ -1,8 +1,6 @@
-
 <?php
 
-if (isset($_SESSION['adresse_email'])) 
-{
+if (isset($_SESSION['adresse_email'])) {
     $adresse_email = $_SESSION['adresse_email'];
     $nom = $_SESSION['nom'];
     $prenom = $_SESSION['prenom'];
@@ -12,9 +10,8 @@ if (isset($_SESSION['adresse_email']))
     $adresse_email_secours = $_SESSION['adresse_email_secours'];
     $photo_profil = $_SESSION['photo_profil'];
 
-} 
+}
 require_once __DIR__ . "/headers/profileheader.php";
-
 ?>
 
 
@@ -35,18 +32,19 @@ require_once __DIR__ . "/headers/profileheader.php";
                     <button class="btn profile-edit-btn" name="editprofile">Edit Profile</button>
                     <?php
 
-                    if (isset($_POST['editprofile'])) 
-                    {
+                    if (isset($_POST['editprofile'])) {
                         header("Location: index.php?action=editprofile");
                     }
-                    
+
                     ?>
                     <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog"
                             aria-hidden="true"></i></button>
                 </div>
                 <div class="profile-stats">
                     <ul>
-                        <li><span class="profile-stat-count"><?php echo implode(" ",$GLOBALS["nb_user_publications"])?></span> Publications</li>
+                        <li><span class="profile-stat-count">
+                                <?php echo $GLOBALS["nb_user_publications"] ?>
+                            </span> Publications</li>
                         <li><span class="profile-stat-count">x</span> Abonnés</li>
                         <li><span class="profile-stat-count">x</span> Abonnements</li>
                     </ul>
@@ -61,10 +59,21 @@ require_once __DIR__ . "/headers/profileheader.php";
             <div class="gallery">
                 <?php
                 foreach ($GLOBALS["user_publications"] as $publication) {
-                    $link_img = $publication["link_img"];
-                    $likes_count = $publication["likes_count"];
-                    $comments_count = $publication["comments_count"];
-
+                    if (isset($publication["link_img"])) {
+                        $link_img = $publication["link_img"];
+                    } else {
+                        $link_img = "";
+                    }
+                    if (isset($publication["likes_count"])) {
+                        $likes_count = $publication["likes_count"];
+                    } else {
+                        $likes_count = "";
+                    }
+                    if (isset($publication["comments_count"])) {
+                        $comments_count = $publication["comments_count"];
+                    } else {
+                        $comments_count = "";
+                    }
                     echo "<div class=\"gallery-item\" tabindex=\"0\">
                 <img src=\"$link_img\">
                 <div class=\"gallery-item-info\">

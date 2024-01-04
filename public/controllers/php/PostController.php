@@ -18,12 +18,13 @@ class PostController extends Controller
         $this->postView->render();
     }
 
-        
+
     public function createNewPost()
     {
-        if (isset($_POST['submit_post'])) 
-        {
+        if (isset($_POST['submit_post'])) {
+            session_start();
             $this->postView->render();
+            echo $_SESSION['adresse_email'];
             $user_id = $this->getMainDao()->selectFrom("utilisateurs", "id_utilisateur", "adresse_email = '" . $_SESSION['adresse_email'] . "'")[0]['id_utilisateur'];
 
             $post_title = $_POST['post_title'];
@@ -36,31 +37,24 @@ class PostController extends Controller
                 array($user_id, $post_title, $post_text, $post_visibility)
             );
 
-            if ($result) {
-                $last_inserted_id = $this->getMainDao()->getLastInsertedId();
+            $last_inserted_id = $this->getMainDao()->getLastInsertedId();
 
-                $upload_folder = 'uploads/';
-                $post_images = [];
-
-                if (!empty($_FILES['post_images']['name'][0])) 
-                {
-                    foreach ($_FILES['post_images']['tmp_name'] as $key => $tmp_name) 
-                    {
-                        $file_name = $_FILES['post_images']['name'][$key];
-                        $upload_path = $upload_folder . $file_name;
-
-                        move_uploaded_file($tmp_name, $upload_path);
-
-                        $result_image = $this->getMainDao()->insertInto(
-                            "images_publication",
-                            array("id_publication", "photo_url"),
-                            array($last_inserted_id, $upload_path)
-                        );
-                    }
-                }
-
-                echo "Post publié avec succès!";
+            $upload_folder = 'uploads/';
+            $post_images = [];
+            $file_name = $_POST['post_images'][0];
+            $upload_path = $upload_folder . $file_name;
+            $this->getMainDao()->insertInto(
+                "images_publication",
+                array("id_publication", "photo_url"),
+                array($last_inserted_id, $upload_path)
+            );
+            if (move_uploaded_file($_POST['post_images'][0], $upload_path)) {
+                echo "ok";
+            } else {
+                echo "Erreur de téléchargement !\n";
             }
+
+
         }
     }
 }

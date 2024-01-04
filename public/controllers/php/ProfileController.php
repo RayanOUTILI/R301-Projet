@@ -15,7 +15,7 @@ class ProfileController extends Controller
     public function render()
     {
         session_start();
-        $GLOBALS["nb_user_publications"] = $this->_mainDao->getNbPublications($_SESSION['id_utilisateur']);
+        $GLOBALS["nb_user_publications"] = $this->_mainDao->getNbPublications($_SESSION['adresse_email']);
         $user_publications = $this->_mainDao->getPublication($_SESSION['adresse_email']); 
         foreach ($user_publications as &$publication) 
         {

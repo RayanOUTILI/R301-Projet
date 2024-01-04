@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,10 +9,12 @@
     <link rel="stylesheet" href="./public/views/css/nav.css">
     <link rel="stylesheet" href="./public/views/css/feed.css">
     <link rel="stylesheet" href="./public/views/css/user_profile.css">
-    <link rel="stylesheet" href="./public/views/css/people.css">
+    <link rel="stylesheet" href="./public/views/css/post.css">
     <link rel="stylesheet" href="./public/views/css/message.css">
     <link rel="stylesheet" href="./public/views/css/form.css">
     <script src="./public/views/js/form.js"></script>
+    <script src="./public/views/js/post.js"></script>
+    <script src="./public/views/js/pagination.js"></script>
 
     <title>Réseau social</title>
 </head>
