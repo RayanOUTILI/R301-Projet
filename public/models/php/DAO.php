@@ -22,11 +22,15 @@ class DAO
 
     private function init_pdo()
     {
-        if ($this->pdo == null) {
-            try {
+        if ($this->pdo == null) 
+        {
+            try 
+            {
                 $this->pdo = new PDO($this->databaseConnectionString);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
+            } 
+            catch (PDOException $e) 
+            {
                 echo $e->getMessage();
             }
         }
@@ -35,8 +39,6 @@ class DAO
 
 
     /**
-     *   @author Thomas Portelette
-     *
      *   @param $table: the table name
      *
      *   Selects all the rows from a table
@@ -55,9 +57,6 @@ class DAO
     }
 
     /**
-     *
-     *   @author Thomas Portelette
-     *
      *   @param $table: the table name	
      *   @param $email: the email address we want to check the existence of
      *
@@ -79,8 +78,6 @@ class DAO
     }
 
     /** 
-     *   @author Thomas Portelette
-     *
      *   @param $table: the table name
      *   @param $email: the email address we want to check the existence of
      *   @param $password: the password we want to check the match of
@@ -96,16 +93,16 @@ class DAO
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if (count($result) > 0) {
+        if (count($result) > 0) 
+        {
             return true;
-        } else {
+        } else 
+        {
             return false;
         }
     }
 
     /**
-     *  @author Thomas Portelette
-     *   
      *  @param $table: the table name
      *  @param $fields: a string of fields separated by a comma
      *  @param $condition: the condition that must be met for the row to be selected (ex: "id = 1")
@@ -118,7 +115,8 @@ class DAO
         $this->init_pdo();
         $query = "SELECT ";
         $fieldsQ = "";
-        foreach (explode(",", $fields) as $field) {
+        foreach (explode(",", $fields) as $field) 
+        {
             $fieldsQ .= "$field,";
         }
         $fieldsQ = substr($fieldsQ, 0, -1);
@@ -131,8 +129,6 @@ class DAO
     }
 
     /** 
-     *   @author Thomas Portelette
-     *
      *   @param $table: the table name
      *   @param $fields: an array of fields 
      *   @param $values: an array of values 
@@ -148,14 +144,16 @@ class DAO
 
         $query = "INSERT INTO $table (";
         $fieldsQ = "";
-        foreach ($fields as $field) {
+        foreach ($fields as $field) 
+        {
             $fieldsQ .= "$field,";
         }
         $fieldsQ = substr($fieldsQ, 0, -1);
         $query .= $fieldsQ;
         $query .= ") VALUES (";
         $valuesQ = "";
-        foreach ($values as $value) {
+        foreach ($values as $value) 
+        {
             $valuesQ .= "'$value',";
         }
         $valuesQ = substr($valuesQ, 0, -1);
@@ -167,9 +165,7 @@ class DAO
         return $result;
     }
 
-    /** 
-     *   @author Thomas Portelette
-     *
+    /**
      *   @param $table: the table name
      *   @param $values: an array of values that are separated by a comma and surrounded by simple quotes
      *   @param $condition: the condition that must be met for the row to be updated
@@ -190,8 +186,6 @@ class DAO
 
 
     /** 
-     *   @author Thomas Portelette
-     *
      *   @param $table: the table name
      *   @param $condition: the condition that must be met for the row to be deleted
      *
@@ -267,15 +261,23 @@ class DAO
         return $result['nb_comments'];
     }
 
-    public function getNbPublications()
+    public function getNbPublications($id_utilisateur)
     {
         $this->init_pdo();
-        $query = "SELECT COUNT(*) AS nb_publications FROM publications";
+        $query = "SELECT COUNT(*) AS nb_publications FROM publications GROUP BY id_utilisateur HAVING id_utilisateur = '$id_utilisateur'";
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        return $result['nb_publications'];
+        if($result)
+        {
+            return $result;
+        }
+        else
+        {
+            return 0;
+        }
     }
+ 
 
     public function getPaginatedPublications($postsPerPage, $currentPage)
     {
@@ -292,8 +294,6 @@ class DAO
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
-
-
 
     public function __destruct()
     {

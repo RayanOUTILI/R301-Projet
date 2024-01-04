@@ -2,18 +2,20 @@
 
 require_once __DIR__ . "/Controller.php";
 require_once __DIR__ . "/../../views/php/classes/PostView.php";
-require_once __DIR__ . "/../../interfaces/IObservable.php";
 
-class PostController extends Controller implements IObservable
+class PostController extends Controller
 {
     private $postView;
-    private $observers = [];
 
     public function __construct()
     {
         parent::__construct();
         $this->postView = new PostView();
+    }
 
+    public function render()
+    {
+        $this->postView->render();
     }
 
         
@@ -22,7 +24,7 @@ class PostController extends Controller implements IObservable
         if (isset($_POST['submit_post'])) 
         {
             $this->postView->render();
-            $user_id = 1;
+            $user_id = $this->getMainDao()->selectFrom("utilisateurs", "id_utilisateur", "adresse_email = '" . $_SESSION['adresse_email'] . "'")[0]['id_utilisateur'];
 
             $post_title = $_POST['post_title'];
             $post_text = $_POST['post_text'];
@@ -59,28 +61,6 @@ class PostController extends Controller implements IObservable
 
                 echo "Post publié avec succès!";
             }
-        }
-    }
-
-    public function attach(IObserver $observer)
-    {
-        $this->observers[] = $observer;
-    }
-
-    public function detach(IObserver $observer)
-    {
-        $key = array_search($observer, $this->observers, true);
-        if ($key) 
-        {
-            unset($this->observers[$key]);
-        }
-    }
-
-    public function notify(string $action)
-    {
-        foreach ($this->observers as $observer) 
-        {
-            $observer->update($action);
         }
     }
 }

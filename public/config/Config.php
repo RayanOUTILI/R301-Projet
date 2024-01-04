@@ -8,5 +8,6 @@ class Config
     const DBPASSWORD = "s]3zY[KhQ54(*qC0";
 }
 $router = new Router();
-setcookie("router", serialize($router), time() + 3600, "/");
+$router->route();
+
 ?>

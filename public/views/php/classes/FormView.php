@@ -7,11 +7,6 @@ class FormView extends View
     {
         parent::__construct(__DIR__ . "/../form.php");
     }
-
-    public function displayFormError($errorMessage)
-    {
-        echo "<script>alert('$errorMessage');</script>";
-    }
 }
 
 

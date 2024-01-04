@@ -2,17 +2,14 @@
 
 require_once __DIR__ . "/Controller.php";
 require_once __DIR__ . "/../../views/php/classes/FormView.php";
-require_once __DIR__ . "/../../interfaces/IObservable.php";
 
-class FormController extends Controller implements IObservable
+class FormController extends Controller
 {
     private $formView;
-    private $observers = [];
     public function __construct()
     {
         parent::__construct();
         $this->formView = new FormView();
-        $this->formView->render();
     }
 
     public function validateLoginForm()
@@ -29,16 +26,18 @@ class FormController extends Controller implements IObservable
                 {
                     session_start();
                     $_SESSION['adresse_email'] = $adresse_email;
-                    $user_info = $this->getMainDao()->selectFrom("utilisateurs","nom,prenom,date_naissance,adresse,telephone_portable,adresse_email_secours,photo_profil","adresse_email = '$adresse_email'");
+                    $user_info = $this->getMainDao()->selectFrom("utilisateurs","nom,prenom,date_naissance,adresse,telephone_portable,adresse_email_secours,photo_profil,id_utilisateur","adresse_email = '$adresse_email'");
                     $_SESSION = array_merge($_SESSION,$user_info[0]);
-                    $this->notify("loginConfirmed");
+                    header("Location: index.php?action=profile");
                 }
                 else 
                 {
-                    $this->formView->displayFormError("Le mot de passe est incorrect");
+                    $this->formView->displayError("Le mot de passe est incorrect");
                 }
-            } else {
-                $this->formView->displayFormError("Cette adresse email n'existe pas");
+            } 
+            else 
+            {
+                $this->formView->displayError("Cette adresse email n'existe pas");
             }
 
         }
@@ -68,11 +67,11 @@ class FormController extends Controller implements IObservable
                     array("nom", "prenom", "adresse_email", "adresse_email_secours", "mot_de_passe", "adresse", "telephone_portable", "date_naissance"),
                     array($nom, $prenom, $adresse_email, $email_secours, $mot_de_passe, $adresse, $telephone_portable, $date_naissance)
                 );
-                $this->notify("signupConfirmed");
+                header("Location: index.php?action=profile");
             } 
             else
             {
-                $this->formView->displayFormError("Cette adresse email est déjà utilisée");
+                $this->formView->displayError("Cette adresse email est déjà utilisée");
             }
 
         }
@@ -87,27 +86,11 @@ class FormController extends Controller implements IObservable
         }
     }
 
-    public function attach(IObserver $observer)
+    public function render()
     {
-        $this->observers[] = $observer;
+        $this->formView->render();
     }
 
-    public function detach(IObserver $observer)
-    {
-        $key = array_search($observer, $this->observers, true);
-        if ($key) 
-        {
-            unset($this->observers[$key]);
-        }
-    }
-
-    public function notify(string $action)
-    {
-        foreach ($this->observers as $observer)
-        {
-            $observer->update($action);
-        }
-    }
 }
 
 

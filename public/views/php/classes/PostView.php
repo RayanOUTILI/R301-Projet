@@ -8,11 +8,6 @@ class PostView extends View
     {
         parent::__construct(__DIR__ . "/../post.php");
     }
-
-    public function displayPostError($errorMessage)
-    {
-        echo "<script>alert('$errorMessage');</script>";
-    }
 }
 
 

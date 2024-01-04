@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
+
 <?php
 
-session_start();
 if (isset($_SESSION['adresse_email'])) 
 {
     $adresse_email = $_SESSION['adresse_email'];
@@ -15,22 +13,10 @@ if (isset($_SESSION['adresse_email']))
     $photo_profil = $_SESSION['photo_profil'];
 
 } 
-else 
-{
-    header("Location: index.php"); // à décommenter sur linserv
-}
-
+require_once __DIR__ . "/headers/profileheader.php";
 ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/nav.css">
-    <link rel="stylesheet" href="../css/user_profile.css">
-    <?php
-    echo "<title>Profil de $nom $prenom</title>"
-        ?>
-</head>
+
 
 <body>
     <?php include_once('nav.php'); ?>
@@ -45,13 +31,21 @@ else
                     <h1 class="profile-user-name">
                         <?php echo $prenom . " " . $nom ?>
                     </h1>
-                    <button class="btn profile-edit-btn">Edit Profile</button>
+                    <button class="btn profile-edit-btn" name="editprofile">Edit Profile</button>
+                    <?php
+
+                    if (isset($_POST['editprofile'])) 
+                    {
+                        header("Location: index.php?action=editprofile");
+                    }
+                    
+                    ?>
                     <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog"
                             aria-hidden="true"></i></button>
                 </div>
                 <div class="profile-stats">
                     <ul>
-                        <li><span class="profile-stat-count">x</span> $nb_user_publications</li>
+                        <li><span class="profile-stat-count"><?php echo $GLOBALS["nb_user_publications"]?></span> Publications</li>
                         <li><span class="profile-stat-count">x</span> Abonnés</li>
                         <li><span class="profile-stat-count">x</span> Abonnements</li>
                     </ul>
@@ -65,10 +59,10 @@ else
         <div class="container">
             <div class="gallery">
                 <?php
-                foreach ($user_publications as $publication) {
-                    $link_img = $dao->getLinkImages($publication['id_publication']);
-                    $likes_count = $dao->getNbLikes($publication['id_publication']);
-                    $comments_count = $dao->getNbComments($publication['id_publication']);
+                foreach ($GLOBALS["user_publications"] as $publication) {
+                    $link_img = $GLOBALS[$publication]["link_img"];
+                    $likes_count = $GLOBALS[$publication]["likes_count"];
+                    $comments_count = $GLOBALS[$publication]["comments_count"];
 
                     echo "<div class=\"gallery-item\" tabindex=\"0\">
                 <img src=\"$link_img\">

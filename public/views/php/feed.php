@@ -24,10 +24,8 @@ if (isset($_SESSION['adresse_email'])) {
     }
 
     $limited_publications = $dao->getPaginatedPublications($postsPerPage, $currentPage); //on limite le nombre de publications à 5 par page
-} else {
-    // header("Location: index.php");
-    // exit();
-}
+} 
+
 ?>
 
 <head>

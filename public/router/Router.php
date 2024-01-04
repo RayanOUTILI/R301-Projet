@@ -2,41 +2,52 @@
 
 require_once __DIR__ . "/../controllers/php/FormController.php";
 require_once __DIR__ . "/../controllers/php/PostController.php";
-require_once __DIR__ . "/../interfaces/IObserver.php";
+require_once __DIR__ . "/../controllers/php/ProfileController.php";
 
-class Router implements IObserver
+class Router
 {
     private $formController;
     private $postController;
+    private $profileController;
 
     public function __construct()
     {
         $this->formController = new FormController();
         $this->postController = new PostController();
-
-        $this->formController->attach($this);
-        $this->postController->attach($this);
+        $this->profileController = new ProfileController();
+       
     }
 
-    public function update($data)
+    public function route()
     {
-        switch($data)
+        if (isset($_GET["action"]))
         {
-            case "validateLoginForm":
-                $this->formController->validateLoginForm();
-                break;
-            case "validateSignupForm":
-                $this->formController->validateSignupForm();
-                break;
-            case "loginConfirmed":
-            case "signupConfirmed":
-                header("Location: ./public/views/php/user_profile.php");
-                break;
-            case "createNewPost":
-                $this->postController->createNewPost();
-                break;
-            default:
-                break;
+            switch ($_GET["action"])
+            {
+                case "form":
+                    echo "form";
+                    $this->formController->render();
+                    break;
+                case "login":
+                    $this->formController->validateLoginForm();
+                    break;
+                case "signup":
+                    $this->formController->validateSignupForm();
+                    break;
+                case "profile":
+                    $this->profileController->render();
+                    break;
+                case "post":
+                    $this->postController->render();
+                    break;
+                default:
+                    $this->formController->render();
+                    break;
+            }
+        }
+        else
+        {
+            $this->formController->render();
         }
     }
 
