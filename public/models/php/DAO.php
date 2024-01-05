@@ -101,7 +101,7 @@ class DAO
      *  @param $fields: a string of fields separated by a comma
      *  @param $condition: the condition that must be met for the row to be selected (ex: "id = 1")
      * 
-     * 
+     *  Selects a row from a table
      */
 
     public function selectFrom($table, $fields, $condition)
@@ -115,6 +115,24 @@ class DAO
         $fieldsQ = substr($fieldsQ, 0, -1);
         $query .= $fieldsQ;
         $query .= " FROM $table WHERE $condition";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    /**
+     *  @param $table: the table name
+     *  @param $fields: a string of fields separated by a comma
+     *  @param $condition: the condition that must be met for the row to be selected (ex: "id = 1")
+     * 
+     *  Same as selectFrom, but instead we are looking for equivalent for the name or the first name
+     */
+
+    public function selectFromEquivalent($table, $input)
+    {
+        $this->init_pdo();
+        $query = "SELECT * FROM $table WHERE nom LIKE '%$input%' OR prenom LIKE '%$input%'";
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -318,6 +336,23 @@ class DAO
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+
+    public function checkIfAdmin($user_id)
+    {
+        $this->init_pdo();
+        $query = "SELECT * FROM administrateurs WHERE id_utilisateur = $user_id";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if(count($result) > 0)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
     }
 
     public function __destruct()

@@ -1,9 +1,9 @@
 <?php
-
 require_once __DIR__ . "/../controllers/php/FormController.php";
 require_once __DIR__ . "/../controllers/php/PostController.php";
 require_once __DIR__ . "/../controllers/php/ProfileController.php";
 require_once __DIR__ . "/../controllers/php/FeedController.php";
+require_once __DIR__ . "/../controllers/php/AdminBoardController.php";
 
 class Router
 {
@@ -11,8 +11,8 @@ class Router
     private $postController;
     private $profileController;
     private $feedController;
-
-
+    private $adminBoardController;
+    private $errorView;
 
     public function __construct()
     {
@@ -25,8 +25,10 @@ class Router
 
     public function route()
     {
-        if (isset($_GET["action"])) {
-            switch ($_GET["action"]) {
+        if (isset($_GET["action"])) 
+        {
+            switch ($_GET["action"]) 
+            {
                 case "form":
                     $this->formController->render();
                     break;
@@ -48,15 +50,23 @@ class Router
                 case "feed":
                     $this->feedController->render();
                     break;
+                case "admin":
+                    if($_SESSION['is_admin'] == true)
+                        $this->adminBoardController->render();
+                    else
+                        $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
+                    break;
                 default:
                     $this->formController->render();
                     break;
             }
-        } else {
+        } 
+        else 
+        {
             $this->formController->render();
         }
+        
     }
-
 
 
 }

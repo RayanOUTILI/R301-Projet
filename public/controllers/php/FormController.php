@@ -28,6 +28,8 @@ class FormController extends Controller
                     $_SESSION['adresse_email'] = $adresse_email;
                     $user_info = $this->getMainDao()->selectFrom("utilisateurs","nom,prenom,date_naissance,adresse,telephone_portable,adresse_email_secours,photo_profil,id_utilisateur","adresse_email = '$adresse_email'");
                     $_SESSION = array_merge($_SESSION,$user_info[0]);
+                    $is_admin = $this->getMainDao()->checkIfAdmin($_SESSION['id_utilisateur']);
+                    $_SESSION['is_admin'] = $is_admin;
                     header("Location: index.php?action=profile");
                 }
                 else 
@@ -74,15 +76,6 @@ class FormController extends Controller
                 $this->formView->displayError("Cette adresse email est déjà utilisée");
             }
 
-        }
-    }
-
-    public function cleanFormInput()
-    {
-        foreach ($_POST as $key => $value) {
-            $_POST[$key] = htmlspecialchars($value);
-            $_POST[$key] = trim($value);
-            $_POST[$key] = stripslashes($value);
         }
     }
 

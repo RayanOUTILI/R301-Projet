@@ -3,7 +3,6 @@
 require __DIR__ . '/../../models/php/DAO.php';
 abstract class Controller
 {
-    protected $_model;
     protected $_mainDao;
     protected $_error;
     public function __construct()
@@ -16,9 +15,13 @@ abstract class Controller
         return $this->_mainDao;
     }
 
-    public function getModel()
+    public function cleanFormInput()
     {
-        return $this->_model;
+        foreach ($_POST as $key => $value) {
+            $_POST[$key] = htmlspecialchars($value);
+            $_POST[$key] = trim($value);
+            $_POST[$key] = stripslashes($value);
+        }
     }
 
     public function getError()

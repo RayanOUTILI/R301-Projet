@@ -3,6 +3,7 @@
 require_once __DIR__ . "/Controller.php";
 require_once __DIR__ . "/../../views/php/classes/ProfileView.php";
 
+
 class ProfileController extends Controller
 {
     private $profileView;
@@ -28,6 +29,7 @@ class ProfileController extends Controller
         $GLOBALS["user_publications"] = $user_publications;
        
         $this->profileView->render();
+
 
     }
 

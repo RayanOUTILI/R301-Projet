@@ -48,5 +48,19 @@ $root_path = str_replace("/www", "", $root_path);
                 </div>
             </a>
         </li>
+        <?php
+        
+        if($is_admin)
+        {
+            echo '<li>
+            <a href="index.php?action=admin">
+                <div class="icon">
+                    <img src="' . $root_path . '/assets/img/administrator.png" alt="Admin">
+                </div>
+            </a>
+            </li>';
+        }
+        
+        ?>
     </ul>
 </nav>

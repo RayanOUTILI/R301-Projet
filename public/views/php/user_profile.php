@@ -1,6 +1,7 @@
 <?php
 
-if (isset($_SESSION['adresse_email'])) {
+if (isset($_SESSION['adresse_email'])) 
+{
     $adresse_email = $_SESSION['adresse_email'];
     $nom = $_SESSION['nom'];
     $prenom = $_SESSION['prenom'];
@@ -9,6 +10,7 @@ if (isset($_SESSION['adresse_email'])) {
     $date_naissance = $_SESSION['date_naissance'];
     $adresse_email_secours = $_SESSION['adresse_email_secours'];
     $photo_profil = $_SESSION['photo_profil'];
+    $is_admin = $_SESSION['is_admin'];
 
 }
 require_once __DIR__ . "/headers/profileheader.php";
@@ -17,13 +19,14 @@ require_once __DIR__ . "/headers/profileheader.php";
 
 
 <body>
-    <?php include_once('nav.php'); ?>
+    <?php 
+    include_once('nav.php'); ?>
 
     <header>
         <div class="container">
             <div class="profile">
                 <div class="profile-image">
-                    <img src="../img/<?php echo $photo_profil ?>" alt="">
+                    <img src="<?php echo $photo_profil ?>" alt="">
                 </div>
                 <div class="profile-user-settings">
                     <h1 class="profile-user-name">

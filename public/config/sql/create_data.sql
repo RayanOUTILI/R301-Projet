@@ -8,10 +8,10 @@ VALUES
     NOW() -- INTERVAL 6 DAY
 );
 
-INSERT INTO administrateurs (id_utilisateur, date_debut_admin)
+INSERT INTO administrateurs (id_utilisateur)
 VALUES 
 (
     (SELECT id_utilisateur FROM utilisateurs WHERE adresse_mail = 'rayan.outili@gmail.com'), 
-    NOW()
+    
 );
 
