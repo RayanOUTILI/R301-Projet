@@ -24,10 +24,29 @@ class AdminBoardController extends Controller
             $this->cleanFormInput();
             $user_to_search = $_POST['searchbar'];
 
-            $user_info = $this->getMainDao()->selectFromEquivalent("utilisateurs","nom,prenom,date_naissance,adresse,telephone_portable,adresse_email_secours,photo_profil,id_utilisateur","adresse_email = '$user_to_search'");
+            $users = $this->getMainDao()->selectFromEquivalent("utilisateurs","nom,prenom,date_naissance,adresse,telephone_portable,adresse_email_secours,photo_profil,id_utilisateur","adresse_email = '$user_to_search'");
             
+            if(empty($users))
+            {
+                $this->renderUserSearch("Aucun utilisateur trouvé");
+            }
+            else 
+            {
+                $this->renderUserSearch($users);
+            }
+            
+        }
+    }
 
-            
+    public function renderUserSearch($users)
+    {
+        if($users == "Aucun utilisateur trouvé")
+        {
+            $this->adminBoardView->renderNoUserFound();
+        }
+        else 
+        {
+            $this->adminBoardView->renderUserSearch($users);
         }
     }
 

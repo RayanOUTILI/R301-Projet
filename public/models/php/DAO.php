@@ -352,6 +352,33 @@ class DAO
         }
     }
 
+    function deleteUserFromWebsite($user_id)
+    {
+        $this->init_pdo();
+        $query = "DELETE FROM utilisateurs WHERE id_utilisateur = $user_id";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+    }
+
+    function deletePostFromWebsite($post_id)
+    {
+        $this->init_pdo();
+        $query = "DELETE FROM publications WHERE id_publication = $post_id";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+    }
+
+    function blockPost($post_id)
+    {
+        $this->init_pdo();
+        $query = "UPDATE publications SET est_bloque = 1 WHERE id_publication = $post_id";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+    }
+    
+
+
+
     public function __destruct()
     {
         $this->pdo = null;
