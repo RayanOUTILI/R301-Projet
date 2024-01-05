@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="public/views/css/post.css">
         <link rel="stylesheet" href="public/views/css/main.css">
         <link rel="stylesheet" href="public/views/css/nav.css">
-        <title>Publier un psost</title>
+        <title>Publier un post</title>
     </head>
 
 <body>

@@ -1,7 +1,6 @@
 <?php
 
-if (isset($_SESSION['adresse_email'])) 
-{
+if (isset($_SESSION['adresse_email'])) {
     $adresse_email = $_SESSION['adresse_email'];
     $nom = $_SESSION['nom'];
     $prenom = $_SESSION['prenom'];
@@ -19,7 +18,7 @@ require_once __DIR__ . "/headers/profileheader.php";
 
 
 <body>
-    <?php 
+    <?php
     include_once('nav.php'); ?>
 
     <header>

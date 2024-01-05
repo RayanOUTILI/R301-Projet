@@ -71,6 +71,7 @@ img {
 
 .profile-image img {
     border-radius: 50%;
+    width: 100px;
 }
 
 .profile-user-settings,
@@ -148,6 +149,10 @@ img {
     margin: 1rem;
     color: #fff;
     cursor: pointer;
+}
+
+.gallery-item img {
+    width: 300px;
 }
 
 .gallery-item:hover .gallery-item-info,

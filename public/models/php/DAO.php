@@ -260,7 +260,7 @@ class DAO
         $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        return $result['nb_likes'];
+        return isset($result['nb_likes']) ? $result['nb_likes'] : 0;
     }
 
     public function getAuthorSurname($idPost)
@@ -271,7 +271,7 @@ class DAO
         $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        return $result['nom'];
+        return isset($result['nom']) ? $result['nom'] : "";
     }
 
     public function getAuthorName($idPost)
@@ -282,7 +282,7 @@ class DAO
         $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        return $result['prenom'];
+        return isset($result['prenom']) ? $result['prenom'] : "";
     }
 
     public function getAuthorPhoto($idPost)
@@ -293,7 +293,7 @@ class DAO
         $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        return $result['photo_profil'];
+        return isset($result['photo_profil']) ? $result['photo_profil'] : "";
     }
 
     public function getNbComments($idPost)
@@ -304,7 +304,7 @@ class DAO
         $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        return $result['nb_comments'];
+        return isset($result['nb_comments']) ? $result['nb_comments'] : 0;
     }
 
     public function getNbPublications($user_mail)
@@ -335,7 +335,7 @@ class DAO
         $statement->execute();
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
+        return isset($result) ? $result : array();
     }
 
     public function checkIfAdmin($user_id)
@@ -345,12 +345,9 @@ class DAO
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if(count($result) > 0)
-        {
+        if (count($result) > 0) {
             return true;
-        }
-        else 
-        {
+        } else {
             return false;
         }
     }

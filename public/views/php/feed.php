@@ -65,8 +65,7 @@ if (isset($_SESSION['adresse_email'])) {
 
                 <div class="post-top">
                     <span class="avatar">
-                        <img src="<?php echo '/~or201305/R102/TD5/js/social-network/public/views/php' . '/' . $photoProfil; ?>"
-                            alt="Avatar">
+                        <img src="<?php echo '/~or201305/R102/TD5/js/social-network/' . $photoProfil; ?>" alt="Avatar">
                     </span>
                     <h1 class="title">
                         <p>
@@ -76,8 +75,7 @@ if (isset($_SESSION['adresse_email'])) {
                 </div>
 
                 <div class="photo-post">
-                    <img src="<?php echo '/~or201305/R102/TD5/js/social-network/public/views/php' . '/' . $images; ?>"
-                        alt="Photo">
+                    <img src="<?php echo '/~or201305/R102/TD5/js/social-network/' . $images; ?>" alt="Photo">
 
                 </div>
 
