@@ -53,6 +53,7 @@ class Router
                     break;
                 case "friends":
                     $this->friendsController->render();
+                    break;
                 case "admin":
                     if ($_SESSION['is_admin'] == true)
                         $this->adminBoardController->render();

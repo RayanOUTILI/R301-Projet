@@ -15,3 +15,10 @@ VALUES
     
 );
 
+-- thomas me demande en amis
+INSERT INTO amis (id_utilisateur_demandeur, id_utilisateur_receveur)
+VALUES 
+(
+    (SELECT id_utilisateur FROM utilisateurs WHERE nom = 'Portelette' AND prenom = 'Thomas'), 
+    (SELECT id_utilisateur FROM utilisateurs WHERE nom = 'Outili' AND prenom = 'Rayan')
+);

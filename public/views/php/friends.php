@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-
 <?php
 if (isset($_SESSION['adresse_email'])) {
     $adresse_email = $_SESSION['adresse_email'];
@@ -13,11 +12,13 @@ if (isset($_SESSION['adresse_email'])) {
     $adresse_email_secours = $_SESSION['adresse_email_secours'];
     $photo_profil = $_SESSION['photo_profil'];
 
+    $friends_request = $GLOBALS['friends_request'];
+
 } else {
     header("Location: index.php?action=form");
+    exit();
 }
 ?>
-
 
 <head>
     <meta charset="UTF-8">
@@ -29,6 +30,7 @@ if (isset($_SESSION['adresse_email'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="public/views/js/pagination.js"></script>
+    <script src="public/views/js/friends.js"></script>
     <title>Demande d'amis</title>
 </head>
 
@@ -36,8 +38,31 @@ if (isset($_SESSION['adresse_email'])) {
     <?php include_once('nav.php'); ?>
 
     <div class="friend-requests">
+        <?php
 
+        // print_r($friends_request);
+        
+        if (empty($friends_request)) {
+            echo '<div class="no-friend-request">Vous n\'avez aucune demande d\'amis.</div>';
+        } else {
+            foreach ($friends_request as $request) {
+                $friendBox = '<div class="friend-box">';
+                $img = '<div class="friend-profile" style="background-image: url(' . $request['photo_profil'] . ');"></div>';
+                $name = '<div class="name-box">' . $request['nom'] . ' ' . $request['prenom'] . '</div>';
+                $username = '<div class="user-name-box">vous a envoyé une demande d\'amis.</div>';
+                $rBtnRow = '<div class="request-btn-row" data-username="' . $request['prenom'] . '">';
+                $accept = '<button class="friend-request accept-request" data-username="' . $request['prenom'] . '">Accepter</button>';
+                $decline = '<button class="friend-request decline-request" data-username="' . $request['prenom'] . '">Refuser</button>';
+                $rBtnRow .= $accept . $decline;
+                $rBtnRow .= '</div>';
+                $friendBox .= $img . $name . $username . $rBtnRow . '</div>';
+
+                echo $friendBox;
+            }
+        }
+        ?>
     </div>
+
     <div class="friend-list"></div>
 
 </body>

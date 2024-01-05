@@ -337,7 +337,7 @@ class DAO
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return isset($result) ? $result : array();
     }
-    
+
     public function getNbFriends($user_mail)
     {
         $this->init_pdo();
@@ -346,7 +346,22 @@ class DAO
         $statement->bindParam(':user_mail', $user_mail, PDO::PARAM_STR);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        if ($result) { return $result['nb_friends']; } else { return 0; }
+        if ($result) {
+            return $result['nb_friends'];
+        } else {
+            return 0;
+        }
+    }
+
+    public function getFriendsRequest($user_mail)
+    {
+        $this->init_pdo();
+        $query = "SELECT * FROM utilisateurs JOIN amis ON utilisateurs.id_utilisateur = amis.id_utilisateur_demandeur WHERE amis.id_utilisateur_receveur = (SELECT id_utilisateur FROM utilisateurs WHERE adresse_email = :user_mail) AND amis.statut = 'attente'";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':user_mail', $user_mail, PDO::PARAM_STR);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return isset($result) ? $result : array();
     }
 
 
