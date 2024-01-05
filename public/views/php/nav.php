@@ -35,7 +35,7 @@ $root_path = str_replace("/www", "", $root_path);
             </a>
         </li>
         <li>
-            <a href="index.php?action=likes">
+            <a href="index.php?action=friends">
                 <div class="icon">
                     <img src="<?php echo $root_path . "/assets/img/heart.png" ?>" alt="Heart">
                 </div>

@@ -19,3 +19,8 @@ CREATE TABLE images_publication (
     photo_url VARCHAR(255),
     FOREIGN KEY (id_publication) REFERENCES publications(id_publication)
 );
+
+
+ALTER TABLE images_publication
+ADD CONSTRAINT fk_images_publication_publications
+FOREIGN KEY (id_publication) REFERENCES publications(id_publication);

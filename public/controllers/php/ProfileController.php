@@ -17,6 +17,7 @@ class ProfileController extends Controller
     {
         session_start();
         $GLOBALS["nb_user_publications"] = $this->_mainDao->getNbPublications($_SESSION['adresse_email']);
+        $GLOBALS["nb_user_friends"] = $this->_mainDao->getNbFriends($_SESSION['adresse_email']);
         $user_publications = $this->_mainDao->getPublication($_SESSION['adresse_email']); 
         foreach ($user_publications as &$publication) 
         {

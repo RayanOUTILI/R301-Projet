@@ -36,12 +36,6 @@ CREATE TABLE images_publication (
 );
 
 
-ALTER TABLE images_publication
-ADD CONSTRAINT fk_images_publication_publications
-FOREIGN KEY (id_publication) REFERENCES publications(id_publication);
-
-
-
 -- Table des appréciations (like/dislike)
 CREATE TABLE appreciations (
     id_appreciation INT AUTO_INCREMENT PRIMARY KEY,
@@ -54,15 +48,17 @@ CREATE TABLE appreciations (
     FOREIGN KEY (id_publication) REFERENCES publications(id_publication)
 );
 
--- -- Table des amis
--- CREATE TABLE amis (
---     id_amitie INT AUTO_INCREMENT PRIMARY KEY,
---     id_utilisateur1 INT,
---     id_utilisateur2 INT,
---     statut ENUM('attente', 'accepte') DEFAULT 'attente',
---     FOREIGN KEY (id_utilisateur1) REFERENCES utilisateurs(id_utilisateur),
---     FOREIGN KEY (id_utilisateur2) REFERENCES utilisateurs(id_utilisateur)
--- );
+-- Table des amis
+CREATE TABLE amis (
+    id_amitie INT AUTO_INCREMENT PRIMARY KEY,
+    id_utilisateur_demandeur INT,
+    id_utilisateur_receveur INT,
+    statut ENUM('attente', 'accepte', 'refuse') DEFAULT 'attente',
+    date_demande DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_utilisateur_demandeur) REFERENCES utilisateurs(id_utilisateur),
+    FOREIGN KEY (id_utilisateur_receveur) REFERENCES utilisateurs(id_utilisateur)
+);
+
 
 -- Table des administrateurs
 CREATE TABLE administrateurs (
