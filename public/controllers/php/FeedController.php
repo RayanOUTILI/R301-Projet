@@ -24,8 +24,8 @@ class FeedController extends Controller
             $currentPage = 1;
         }
         $limited_publications = $this->getMainDao()->getPaginatedPublications($postsPerPage, $currentPage); //on limite le nombre de publications à 5 par page
-        foreach ($limited_publications as &$publication) {
-            echo "<script>console.log('" . $publication['id_publication'] . "');</script>";
+        foreach ($limited_publications as &$publication) 
+        {
             $publication["nom"] = $this->_mainDao->getAuthorSurname($publication['id_publication']);
             $publication["prenom"] = $this->_mainDao->getAuthorName($publication['id_publication']);
             $publication["photo_profil"] = $this->_mainDao->getAuthorPhoto($publication['id_publication']);
@@ -33,12 +33,13 @@ class FeedController extends Controller
             $publication["likes_count"] = $this->_mainDao->getNbLikes($publication['id_publication']);
             $publication["comments_count"] = $this->_mainDao->getNbComments($publication['id_publication']);
         }
-        $GLOBALS['limited_publications'] = $limited_publications;
-        $GLOBALS['totalPages'] = $totalPages;
-        $GLOBALS['currentPage'] = $currentPage;
 
-
-        $this->FeedView->render();
+        $variables = [
+            "limited_publications" => $limited_publications,
+            "totalPages" => $totalPages,
+            "currentPage" => $currentPage
+        ];
+        $this->FeedView->render($variables);
         // session_start();
         // if (isset($_SESSION['adresse_email'])) {
         //     $adresse_email = $_SESSION['adresse_email'];

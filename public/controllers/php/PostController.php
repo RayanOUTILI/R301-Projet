@@ -15,14 +15,16 @@ class PostController extends Controller
 
     public function render()
     {
-        $this->postView->render();
+        $rien = ["rien" => "rien"];
+        $this->postView->render($rien);
     }
 
 
     public function createNewPost()
     {
         if (isset($_POST['submit_post'])) {
-            $this->postView->render();
+            
+            $this->render();
             $user_id = $this->getMainDao()->selectFrom("utilisateurs", "id_utilisateur", "adresse_email = '" . $_SESSION['adresse_email'] . "'")[0]['id_utilisateur'];
 
             $post_title = $_POST['post_title'];

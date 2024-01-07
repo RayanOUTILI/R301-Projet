@@ -30,8 +30,9 @@ class FormController extends Controller
                     $_SESSION = array_merge($_SESSION,$user_info[0]);
                     $is_admin = $this->getMainDao()->checkIfAdmin($_SESSION['id_utilisateur']);
                     $_SESSION['is_admin'] = $is_admin;
-                    header("Location: index.php?action=profile");
                     $GLOBALS['is_connected'] = true;
+                    header("Location: index.php?action=profile");
+                    
                 }
                 else 
                 {
@@ -90,7 +91,11 @@ class FormController extends Controller
 
     public function render()
     {
-        $this->formView->render();
+        $variables = 
+        [
+            "rien" => "rien"
+        ];
+        $this->formView->render($variables);
     }
 
 }

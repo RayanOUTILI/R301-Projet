@@ -10,7 +10,8 @@ class AdminBoardView extends View
 
     public function renderUserSearch($users)
     {
-        $this->render();
+        $rien = ["rien"=>"rien"];
+        $this->render($rien);
         echo "<div class='admin-search-results'>";
         foreach($users as $user)
         {
@@ -30,8 +31,8 @@ class AdminBoardView extends View
                 }
                 
                 echo "<div class='resultdiv' >";
-                echo "<img src='" . $user['photo_profil'] . "' alt='photo de profil' class='resultimg' onclick='window.location.href=\"index.php?action=" . $user['id_utilisateur'] . "profile\"'> ";
-                echo "<div class='resultinfo' onclick='window.location.href=\"index.php?action=" . $user['id_utilisateur'] . "profile\"'>";
+                echo "<img src='" . $user['photo_profil'] . "' alt='photo de profil' class='resultimg' onclick='window.location.href=\"index.php?action='profile' ". $user['id_utilisateur'] . "\"'> ";
+                echo "<div class='resultinfo' onclick='window.location.href=\"index.php?action=profile" . $user['id_utilisateur'] ."\"'>";
                 echo "<p>". $user['nom'] . " " . $user['prenom'] ." </p>";
                 echo "<p>" . $user['adresse_email']. "</p>";
                 echo "<p></p>";
@@ -112,7 +113,8 @@ class AdminBoardView extends View
 
     public function renderNoUserFound()
     {
-        $this->render();
+        $rien = ["rien"=>"rien"];
+        $this->render($rien);
         echo "<p>Aucun utilisateur trouvé</p>";
         require __DIR__ . "/../footers/indexfooter.php";
     }

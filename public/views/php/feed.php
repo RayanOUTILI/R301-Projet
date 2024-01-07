@@ -12,9 +12,6 @@ if (isset($_SESSION['adresse_email'])) {
     $date_naissance = $_SESSION['date_naissance'];
     $adresse_email_secours = $_SESSION['adresse_email_secours'];
     $photo_profil = $_SESSION['photo_profil'];
-    $totalPages = $GLOBALS['totalPages'];
-    $currentPage = $GLOBALS['currentPage'];
-    $limited_publications = $GLOBALS['limited_publications'];
 
 } 
 else 
@@ -77,7 +74,32 @@ else
                 </div>
 
                 <div class="photo-post">
-                    <img src="<?php echo '/~or201305/R102/TD5/js/social-network/' . $images; ?>" alt="Photo">
+                    <?php
+                    
+                    if($images == "")
+                    {
+                        echo "";
+                    }
+                    else
+                    {
+                        $mime = mime_content_type($images);
+                        if($mime == "video/mp4")
+                        {
+                            echo "<video width='320' height='240' controls>";
+                            echo "<source src='$images' type='video/mp4'>";
+                            echo "</video>";
+                        }
+                        else if(preg_match('/^image\/[a-z]+$/', $mime))
+                        {
+                            echo "<img src='$images' alt=''>";
+                        }
+                        
+                       
+
+                       
+                    }
+
+                    ?>
 
                 </div>
 

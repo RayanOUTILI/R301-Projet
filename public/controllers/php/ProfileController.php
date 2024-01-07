@@ -16,8 +16,8 @@ class ProfileController extends Controller
     public function render()
     {
         session_start();
-        $GLOBALS["nb_user_publications"] = $this->_mainDao->getNbPublications($_SESSION['adresse_email']);
-        $GLOBALS["nb_user_friends"] = $this->_mainDao->getNbFriends($_SESSION['adresse_email']);
+        $nb_user_publications = $this->_mainDao->getNbPublications($_SESSION['adresse_email']);
+        $nb_user_friends = $this->_mainDao->getNbFriends($_SESSION['adresse_email']);
         $user_publications = $this->_mainDao->getPublication($_SESSION['adresse_email']); 
         foreach ($user_publications as &$publication) 
         {
@@ -25,11 +25,19 @@ class ProfileController extends Controller
             $publication["likes_count"] = $this->_mainDao->getNbLikes($publication['id_publication']);
             $publication["comments_count"] = $this->_mainDao->getNbComments($publication['id_publication']);
         }
+        $variables = [
+            "nom" => $_SESSION['nom'],
+            "prenom" => $_SESSION['prenom'],
+            "photo_profil" => $_SESSION['photo_profil'],
+            "nb_user_publications" => $nb_user_publications,
+            "nb_user_friends" => $nb_user_friends,
+            "user_publications" => $user_publications
+        ];
         
 
         $GLOBALS["user_publications"] = $user_publications;
        
-        $this->profileView->render();
+        $this->profileView->render($variables);
 
 
     }

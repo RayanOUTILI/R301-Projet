@@ -5,6 +5,7 @@ require_once __DIR__ . "/../controllers/php/ProfileController.php";
 require_once __DIR__ . "/../controllers/php/FeedController.php";
 require_once __DIR__ . "/../controllers/php/AdminBoardController.php";
 require_once __DIR__ . "/../controllers/php/FriendsController.php";
+require_once __DIR__ . "/../controllers/php/OtherProfileController.php";
 
 class Router
 {
@@ -15,6 +16,7 @@ class Router
     private $adminBoardController;
     private $errorView;
     private $friendsController;
+    private $otherProfileController;
 
     public function __construct()
     {
@@ -24,6 +26,7 @@ class Router
         $this->feedController = new FeedController();
         $this->friendsController = new FriendsController();
         $this->adminBoardController = new AdminBoardController();
+        $this->otherProfileController = new OtherProfileController();
 
     }
 
@@ -31,6 +34,12 @@ class Router
     {
         if (isset($_GET["action"])) 
         {
+            if(isset($GLOBALS["is_connected"]) && $GLOBALS['is_connected'] == false && $_GET["action"] != "form" && $_GET["action"] != "login" && $_GET["action"] != "signup")
+            {
+                echo "Vous devez être connecté pour accéder à cette page";
+                $this->formController->render();
+                return;
+            }
             switch ($_GET["action"]) 
             {
                 case "form":
@@ -79,7 +88,7 @@ class Router
                     else
                         $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
                     break;
-                case preg_match("/blockuser[0-9]+/", $_GET["action"]) ? true : false:
+                case preg_match("/^blockuser[0-9]+$/", $_GET["action"]) ? true : false:
                     $id = str_replace("blockuser", "", $_GET["action"]);
                     session_start();
                     if ($_SESSION['is_admin'] == true)
@@ -94,6 +103,34 @@ class Router
                         $this->adminBoardController->unblockUser($id);
                     else
                         $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
+                    break;
+                case preg_match("/^deletepost[0-9]+$/", $_GET["action"]) ? true : false:
+                    $id = str_replace("deletepost", "", $_GET["action"]);
+                    session_start();
+                    if ($_SESSION['is_admin'] == true)
+                        //$this->adminBoardController->deletePost($id); //TODO
+                        echo "template";
+                    else
+                        $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
+                    break;
+                case preg_match("/^deletecomment[0-9]+$/", $_GET["action"]) ? true : false:
+                    $id = str_replace("deletecomment", "", $_GET["action"]);
+                    session_start();
+                    if ($_SESSION['is_admin'] == true)
+                        //$this->adminBoardController->deleteComment($id); //TODO
+                        echo "template";
+                    else
+                        $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
+                    break;
+                case preg_match("/^profile[0-9]+$/" , $_GET["action"]) ? true : false:
+                {
+                    $id = str_replace("profile", "", $_GET["action"]);
+                    session_start();
+                    if ($_SESSION['is_admin'] == true)
+                        $this->otherProfileController->render($id);
+                    else
+                        $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
+                }
                     break;
                 default:
                   
@@ -114,7 +151,7 @@ class Router
             {
                 $this->formController->render();
             }
-        }
+        } 
 
     }
 

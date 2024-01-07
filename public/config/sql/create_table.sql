@@ -10,6 +10,7 @@ CREATE TABLE utilisateurs (
     telephone_portable VARCHAR(15),
     photo_profil VARCHAR(255),
     adresse_email_secours VARCHAR(255),
+    est_bloque BOOLEAN DEFAULT FALSE,
     role ENUM('membre', 'admin') DEFAULT 'membre', 
     UNIQUE KEY (adresse_email),
     UNIQUE KEY (adresse_email_secours)

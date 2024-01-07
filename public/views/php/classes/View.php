@@ -9,8 +9,10 @@ abstract class View
         $this->phpFile = $phpFile;
     }
 
-    public function render()
+    public function render($variables)
     {
+        extract($variables);
+
         require $this->phpFile;
     }
 

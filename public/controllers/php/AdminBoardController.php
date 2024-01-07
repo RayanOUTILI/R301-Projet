@@ -14,7 +14,8 @@ class AdminBoardController extends Controller
 
     public function render()
     {
-        $this->adminBoardView->render();
+        $rien = ["rien"=>"rien"];
+        $this->adminBoardView->render($rien);
     }
 
     public function submitForm()
@@ -64,7 +65,7 @@ class AdminBoardController extends Controller
         
         $this->getMainDao()->block_user($id);
         $this->render();
-    
+        header("Location: index.php?action=admin");
     }
 
     public function unblockUser($id)
@@ -72,7 +73,7 @@ class AdminBoardController extends Controller
         
         $this->getMainDao()->unblock_user($id);
         $this->render();
-      
+        header("Location: index.php?action=admin");
     }
 
     public function deleteAccount($id)
@@ -80,7 +81,7 @@ class AdminBoardController extends Controller
        
         $this->getMainDao()->deleteFrom("utilisateurs","id_utilisateur=$id");
         $this->render();
-      
+        header("Location: index.php?action=admin");
     }
 
 

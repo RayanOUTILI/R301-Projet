@@ -12,8 +12,6 @@ if (isset($_SESSION['adresse_email'])) {
     $adresse_email_secours = $_SESSION['adresse_email_secours'];
     $photo_profil = $_SESSION['photo_profil'];
 
-    $friends_request = $GLOBALS['friends_request'];
-
 } else {
     header("Location: index.php?action=form");
     exit();

@@ -16,9 +16,10 @@ class FriendsController extends Controller
     {
         session_start();
 
-        $GLOBALS['friends_request'] = $this->_mainDao->getFriendsRequest($_SESSION['adresse_email']);
-
-        $this->FriendsView->render();
+        $variables = [
+            "friends_request" => $this->_mainDao->getFriendsRequest($_SESSION['adresse_email'])
+        ];
+        $this->FriendsView->render($variables);
 
 
 

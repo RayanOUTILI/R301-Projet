@@ -31,24 +31,18 @@ require_once __DIR__ . "/headers/profileheader.php";
                     <h1 class="profile-user-name">
                         <?php echo $prenom . " " . $nom ?>
                     </h1>
-                    <button class="btn profile-edit-btn" name="editprofile">Edit Profile</button>
-                    <?php
-
-                    if (isset($_POST['editprofile'])) {
-                        header("Location: index.php?action=editprofile");
-                    }
-
-                    ?>
-                    <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog"
-                            aria-hidden="true"></i></button>
+                    <form action='index.php?action=editprofile' method='POST'>
+                    <button class="btn profile-edit-btn" name="editprofile">Modifer profil</button>
+                    </form>
+                
                 </div>
                 <div class="profile-stats">
                     <ul>
                         <li><span class="profile-stat-count">
-                                <?php echo $GLOBALS["nb_user_publications"] ?>
+                                <?php echo $nb_user_publications ?>
                             </span> Publications</li>
                         <li><span class="profile-stat-count">
-                                <?php echo $GLOBALS["nb_user_friends"] ?>
+                                <?php echo $nb_user_friends ?>
                         </span> Amis</li>
                     </ul>
                 </div>

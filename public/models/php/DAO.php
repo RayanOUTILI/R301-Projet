@@ -363,6 +363,31 @@ class DAO
         return isset($result) ? $result : array();
     }
 
+    public function isFriend($myId, $user_id)
+    {
+        $query = "SELECT * FROM amis WHERE (id_utilisateur_demandeur = :myId AND id_utilisateur_receveur = :user_id) OR (id_utilisateur_demandeur = :user_id AND id_utilisateur_receveur = :myId)";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':myId', $myId, PDO::PARAM_INT);
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result) > 0) 
+        {
+            if ($result[0]['statut'] == "accepte") 
+            {
+                return true;
+            } 
+            else 
+            {
+                return false;
+            }
+        } 
+        else 
+        {
+            return false;
+        }
+    }
+
 
     /*
         ADMIN
@@ -382,7 +407,7 @@ class DAO
         }
     }
 
-    function deleteUserFromWebsite($user_id)
+    public function deleteUserFromWebsite($user_id)
     {
         $this->init_pdo();
         $query = "DELETE FROM utilisateurs WHERE id_utilisateur = $user_id";
@@ -390,7 +415,7 @@ class DAO
         $statement->execute();
     }
 
-    function deletePostFromWebsite($post_id)
+    public function deletePostFromWebsite($post_id)
     {
         $this->init_pdo();
         $query = "DELETE FROM publications WHERE id_publication = $post_id";
@@ -398,7 +423,7 @@ class DAO
         $statement->execute();
     }
 
-    function blockPost($post_id)
+    public function blockPost($post_id)
     {
         $this->init_pdo();
         $query = "UPDATE publications SET est_bloque = 1 WHERE id_publication = $post_id";
@@ -406,7 +431,7 @@ class DAO
         $statement->execute();
     }
 
-    function block_user($user_id)
+    public function block_user($user_id)
     {
         $this->init_pdo();
         $query = "UPDATE utilisateurs SET est_bloque = 1 WHERE id_utilisateur = $user_id";
@@ -414,13 +439,30 @@ class DAO
         $statement->execute();
     }
 
-    function unblock_user($user_id)
+    public function unblock_user($user_id)
     {
         $this->init_pdo();
         $query = "UPDATE utilisateurs SET est_bloque = 0 WHERE id_utilisateur = $user_id";
         $statement = $this->pdo->prepare($query);
         $statement->execute();
     }
+
+    public function doUserExist($user_id)
+    {
+        $this->init_pdo();
+        $query = "SELECT * FROM utilisateurs WHERE id_utilisateur = $user_id";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (count($result) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     
     public function __destruct()
     {
