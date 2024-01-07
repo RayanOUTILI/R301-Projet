@@ -23,8 +23,17 @@ class AdminBoardController extends Controller
         {
             $this->cleanFormInput();
             $user_to_search = $_POST['searchbar'];
-
-            $users = $this->getMainDao()->selectFromEquivalent("utilisateurs","nom,prenom,date_naissance,adresse,telephone_portable,adresse_email_secours,photo_profil,id_utilisateur","adresse_email = '$user_to_search'");
+            $split = explode(" ",$user_to_search);
+            $users = array();
+            foreach($split as $word)
+            {
+                $user = $this->getMainDao()->selectFromEquivalent("utilisateurs","$word");
+                if(!empty($user) && !in_array($user,$users))
+                {
+                    array_push($users,$user);
+                }
+            }
+            
             
             if(empty($users))
             {
@@ -48,6 +57,30 @@ class AdminBoardController extends Controller
         {
             $this->adminBoardView->renderUserSearch($users);
         }
+    }
+
+    public function blockUser($id)
+    {
+        
+        $this->getMainDao()->block_user($id);
+        $this->render();
+    
+    }
+
+    public function unblockUser($id)
+    {
+        
+        $this->getMainDao()->unblock_user($id);
+        $this->render();
+      
+    }
+
+    public function deleteAccount($id)
+    {
+       
+        $this->getMainDao()->deleteFrom("utilisateurs","id_utilisateur=$id");
+        $this->render();
+      
     }
 
 

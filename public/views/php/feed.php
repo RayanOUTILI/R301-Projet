@@ -16,7 +16,9 @@ if (isset($_SESSION['adresse_email'])) {
     $currentPage = $GLOBALS['currentPage'];
     $limited_publications = $GLOBALS['limited_publications'];
 
-} else {
+} 
+else 
+{
     header("Location: index.php?action=form");
 }
 ?>

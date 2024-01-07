@@ -23,13 +23,16 @@ class Router
         $this->profileController = new ProfileController();
         $this->feedController = new FeedController();
         $this->friendsController = new FriendsController();
+        $this->adminBoardController = new AdminBoardController();
 
     }
 
     public function route()
     {
-        if (isset($_GET["action"])) {
-            switch ($_GET["action"]) {
+        if (isset($_GET["action"])) 
+        {
+            switch ($_GET["action"]) 
+            {
                 case "form":
                     $this->formController->render();
                     break;
@@ -55,17 +58,62 @@ class Router
                     $this->friendsController->render();
                     break;
                 case "admin":
+                    session_start();
                     if ($_SESSION['is_admin'] == true)
                         $this->adminBoardController->render();
                     else
                         $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
                     break;
+                case "adminsearch":
+                    session_start();
+                    if ($_SESSION['is_admin'] == true)
+                        $this->adminBoardController->submitForm();
+                    else
+                        $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
+                    break;
+                case preg_match("/deleteuser[0-9]+/", $_GET["action"]) ? true : false:
+                    $id = str_replace("deleteuser", "", $_GET["action"]);
+                    session_start();
+                    if ($_SESSION['is_admin'] == true)
+                        $this->adminBoardController->deleteAccount($id);
+                    else
+                        $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
+                    break;
+                case preg_match("/blockuser[0-9]+/", $_GET["action"]) ? true : false:
+                    $id = str_replace("blockuser", "", $_GET["action"]);
+                    session_start();
+                    if ($_SESSION['is_admin'] == true)
+                        $this->adminBoardController->blockUser($id);
+                    else
+                        $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
+                    break;
+                case preg_match("/unblockuser[0-9]+/", $_GET["action"]) ? true : false:
+                    $id = str_replace("unblockuser", "", $_GET["action"]);
+                    session_start();
+                    if ($_SESSION['is_admin'] == true)
+                        $this->adminBoardController->unblockUser($id);
+                    else
+                        $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
+                    break;
                 default:
-                    $this->formController->render();
+                  
                     break;
             }
-        } else {
-            $this->formController->render();
+        } 
+        else 
+        {
+            if(isset($_GLOBALS['is_connected']) == false)
+            {
+                $GLOBALS['is_connected'] = false;
+            }
+            if($GLOBALS['is_connected'] == true)
+            {
+                $this->feedController->render();
+            }
+            else 
+            {
+                $this->formController->render();
+            }
         }
 
     }

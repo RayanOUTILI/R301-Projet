@@ -50,7 +50,7 @@ $root_path = str_replace("/www", "", $root_path);
         </li>
         <?php
         
-        if($$_SESSION['is_admin'] == true)
+        if($_SESSION['is_admin'] == true)
         {
             echo '<li>
             <a href="index.php?action=admin">

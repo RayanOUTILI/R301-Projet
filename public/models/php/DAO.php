@@ -152,7 +152,6 @@ class DAO
     public function insertInto($table, $fields, $values)
     {
         $this->init_pdo();
-
         $query = "INSERT INTO $table (";
         $fieldsQ = "";
         foreach ($fields as $field) {
@@ -406,10 +405,23 @@ class DAO
         $statement = $this->pdo->prepare($query);
         $statement->execute();
     }
+
+    function block_user($user_id)
+    {
+        $this->init_pdo();
+        $query = "UPDATE utilisateurs SET est_bloque = 1 WHERE id_utilisateur = $user_id";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+    }
+
+    function unblock_user($user_id)
+    {
+        $this->init_pdo();
+        $query = "UPDATE utilisateurs SET est_bloque = 0 WHERE id_utilisateur = $user_id";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+    }
     
-
-
-
     public function __destruct()
     {
         $this->pdo = null;

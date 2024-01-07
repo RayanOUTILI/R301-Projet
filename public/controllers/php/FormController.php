@@ -31,6 +31,7 @@ class FormController extends Controller
                     $is_admin = $this->getMainDao()->checkIfAdmin($_SESSION['id_utilisateur']);
                     $_SESSION['is_admin'] = $is_admin;
                     header("Location: index.php?action=profile");
+                    $GLOBALS['is_connected'] = true;
                 }
                 else 
                 {
@@ -50,6 +51,7 @@ class FormController extends Controller
     public function validateSignupForm()
     {
         if (isset($_POST['formulaire_inscription'])) {
+            
             $this->cleanFormInput();
             $nom = $_POST['nom'];
             $prenom = $_POST['prenom'];
@@ -69,7 +71,14 @@ class FormController extends Controller
                     array("nom", "prenom", "adresse_email", "adresse_email_secours", "mot_de_passe", "adresse", "telephone_portable", "date_naissance"),
                     array($nom, $prenom, $adresse_email, $email_secours, $mot_de_passe, $adresse, $telephone_portable, $date_naissance)
                 );
-                header("Location: index.php?action=profile");
+                session_start();
+                $_SESSION['adresse_email'] = $adresse_email;
+                $user_info = $this->getMainDao()->selectFrom("utilisateurs","nom,prenom,date_naissance,adresse,telephone_portable,adresse_email_secours,photo_profil,id_utilisateur","adresse_email = '$adresse_email'");
+                $_SESSION = array_merge($_SESSION,$user_info[0]);
+                $is_admin = $this->getMainDao()->checkIfAdmin($_SESSION['id_utilisateur']);
+                $_SESSION['is_admin'] = $is_admin;
+                header("Location: index.php?action=feed");
+                $GLOBALS['is_connected'] = true;
             } 
             else
             {

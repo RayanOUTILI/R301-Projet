@@ -22,7 +22,6 @@ class PostController extends Controller
     public function createNewPost()
     {
         if (isset($_POST['submit_post'])) {
-            session_start();
             $this->postView->render();
             $user_id = $this->getMainDao()->selectFrom("utilisateurs", "id_utilisateur", "adresse_email = '" . $_SESSION['adresse_email'] . "'")[0]['id_utilisateur'];
 

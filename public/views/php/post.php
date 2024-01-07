@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
+<?php
 
+session_start();
+?>
 <head>
 
     <head>
