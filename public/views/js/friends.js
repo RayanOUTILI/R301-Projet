@@ -1,26 +1,36 @@
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function() {
+    var acceptButtons = document.querySelectorAll('.accept-request');
+    var declineButtons = document.querySelectorAll('.decline-request');
+    var btns = document.querySelectorAll('.request-btn-row');
 
-    $('.friend-requests').on('click', '.friend-request', function () {
-        var $elem = $(this);
-        var username = $elem.attr('data-username');
-        var type = $elem.hasClass('accept-request');
-        console.log(username);
-
-        var $rBtnrow = $('.request-btn-row[data-username="' + username + '"]');
-        $rBtnrow.addClass('disappear');
-
-        var message;
-        if (type) {
-            message = makeHTMLElement('div', 'fr-request-pending accepted', 'Demande d\'amis acceptée.');
-            
-        } else {
-            message = makeHTMLElement('div', 'fr-request-pending declined', 'Demande d\'amis refusée.');
-        }
-
-        $rBtnrow.empty().append(message);
+    acceptButtons.forEach(function(button) {
+        button.addEventListener('click', addFriend);
     });
 
+    declineButtons.forEach(function(button) {
+        button.addEventListener('click', declineFriend);
+    });
 
+    function addFriend() {
+        btns.forEach(function(btn) {
+            btn.classList.add('disappear');
+        });
+        var text = this.closest('.friend-box').querySelector('.user-name-box');
+        text.innerHTML = "a bien été ajouté !";
 
+        
+    }
 
+    function declineFriend() {
+        btns.forEach(function(btn) {
+            btn.classList.add('disappear');
+        });
+        var text = this.closest('.friend-box').querySelector('.user-name-box');
+        text.innerHTML = "a été refusé !";
+    }
 });
+
+
+
+
+
