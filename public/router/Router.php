@@ -66,6 +66,9 @@ class Router
                 case "friends":
                     $this->friendsController->render();
                     break;
+                case "friends-request":
+                    $this->friendsController->friendRequest();
+                    break;
                 case "admin":
                     session_start();
                     if ($_SESSION['is_admin'] == true)

@@ -44,18 +44,22 @@ if (isset($_SESSION['adresse_email'])) {
             echo '<div class="no-friend-request">Vous n\'avez aucune demande d\'amis.</div>';
         } else {
             foreach ($friends_request as $request) {
+                $form = '<form action="index.php?action=friends-request" method="POST">';
                 $friendBox = '<div class="friend-box">';
                 $img = '<div class="friend-profile" style="background-image: url(' . $request['photo_profil'] . ');"></div>';
                 $name = '<div class="name-box">' . $request['nom'] . ' ' . $request['prenom'] . '</div>';
                 $username = '<div class="user-name-box">vous a envoyé une demande d\'amis.</div>';
                 $rBtnRow = '<div class="request-btn-row" data-username="' . $request['prenom'] . '">';
-                $accept = '<button class="friend-request accept-request" data-username="' . $request['prenom'] . '">Accepter</button>';
-                $decline = '<button class="friend-request decline-request" data-username="' . $request['prenom'] . '">Refuser</button>';
+                $accept = '<button name="accept" class="friend-request accept-request" data-username="' . $request['prenom'] . '">Accepter</button>';
+                $decline = '<button name="decline" class="friend-request decline-request" data-username="' . $request['prenom'] . '">Refuser</button>';
                 $rBtnRow .= $accept . $decline;
                 $rBtnRow .= '</div>';
-                $friendBox .= $img . $name . $username . $rBtnRow . '</div>';
+                $form .= $friendBox . $img . $name . $username . $rBtnRow . '</div>';
 
-                echo $friendBox;
+                // on créé un input caché pour récupérer le nom de l'utilisateur qui a envoyé la demande
+                $form .= '<input type="hidden" name="username" value="' . $request['id_utilisateur'] . '">';
+
+                echo $form;
             }
         }
         ?>

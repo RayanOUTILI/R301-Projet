@@ -388,6 +388,38 @@ class DAO
         }
     }
 
+    public function acceptFriendsRequest($myId, $user_id)
+    {
+        $this->init_pdo();
+        $query = "UPDATE amis SET statut = 'accepte' WHERE id_utilisateur_demandeur = :user_id AND id_utilisateur_receveur = :myId";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':myId', $myId, PDO::PARAM_INT);
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->execute();
+    }
+
+    public function declineFriendsRequest($myId, $user_id)
+    {
+        $this->init_pdo();
+        $query = "UPDATE amis SET statut = 'refuse' WHERE id_utilisateur_demandeur = :user_id AND id_utilisateur_receveur = :myId";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':myId', $myId, PDO::PARAM_INT);
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->execute();
+    }
+
+    public function getIdFromMail($user_mail){
+        $this->init_pdo();
+        $query = "SELECT id_utilisateur FROM utilisateurs WHERE adresse_email = :user_mail";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':user_mail', $user_mail, PDO::PARAM_STR);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return isset($result['id_utilisateur']) ? $result['id_utilisateur'] : 0;
+    }
+
+
+
 
     /*
         ADMIN
