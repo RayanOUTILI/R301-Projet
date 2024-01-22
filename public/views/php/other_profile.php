@@ -60,6 +60,10 @@
                 <?php
                 foreach ($user_publications as $publication) 
                 {
+                    if($publication["est_bloque"] == 1 && $is_admin == 0)
+                    {
+                        continue;
+                    }
                     if (isset($publication["link_img"])) {
                         $link_img = $publication["link_img"];
                     } else {
@@ -79,7 +83,16 @@
                 
                 echo "<div class=\"gallery-item\" tabindex=\"0\">";
                 if($is_admin)
-                {echo "<button class=\"profile-block-btn\" name=\"deletepublication\" id=". $publication["id_publication"] .">X</button>";}
+                {
+                    if($publication["est_bloque"] == 0)
+                    {
+                        {echo "<button class=\"profile-block-btn \" name=\"deletepublication\" id=". $publication["id_publication"] .">X</button>";}
+                    }
+                    else
+                    {
+                        {echo "<button class=\"profile-block-btn blocked\" name=\"deletepublication\" id=". $publication["id_publication"] .">&#10003</button>";}
+                    }
+                }
               
                 echo "<img src=\"$link_img\">";
                 

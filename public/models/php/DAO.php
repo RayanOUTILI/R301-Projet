@@ -230,7 +230,7 @@ class DAO
     public function getPublication($userMail)
     {
         $this->init_pdo();
-        $query = "SELECT * FROM publications JOIN utilisateurs ON publications.id_utilisateur = utilisateurs.id_utilisateur WHERE utilisateurs.adresse_email = '$userMail' AND publications.est_bloque = 0 ORDER BY date_publication DESC";
+        $query = "SELECT * FROM publications JOIN utilisateurs ON publications.id_utilisateur = utilisateurs.id_utilisateur WHERE utilisateurs.adresse_email = '$userMail' ORDER BY date_publication DESC";
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
