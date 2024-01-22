@@ -39,7 +39,8 @@ class PostController extends Controller
 
             $last_inserted_id = $this->getMainDao()->getLastInsertedId();
 
-            if (isset($_FILES['post_images']['name'][0]) && !empty($_FILES['post_images']['name'][0])) {
+            // on limite à 1 Mo
+            if (isset($_FILES['post_images']['name'][0]) && !empty($_FILES['post_images']['name'][0]) && $_FILES['post_images']['size'][0] < 1000000) {
                 $upload_folder = 'img/';
                 $file_name = $_FILES['post_images']['name'][0];
                 $upload_path = __DIR__ . '/' . $upload_folder . $file_name;
@@ -68,6 +69,9 @@ class PostController extends Controller
                 } else {
                     echo "Erreur de téléchargement !\n";
                 }
+            }
+            else{
+                echo "Erreur de téléchargement, fichier trop volumineux (1 Mo maximum) !\n";
             }
         }
     }

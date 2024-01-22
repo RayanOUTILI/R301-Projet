@@ -40,10 +40,11 @@ body {
 }
 
 .photo-post img {
-    height: 320px;
+    max-height: 320px;
     background-size: cover;
     background-position: center;
     margin: 0px 0px 4px 0px;
+    max-width: 320px !important;
 }
 
 .flag {
