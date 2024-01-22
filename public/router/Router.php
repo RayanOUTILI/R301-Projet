@@ -85,6 +85,11 @@ class Router
                     echo '<script>console.log("postLikes")</script>';
                     $this->feedController->PostLiked();
                     break;
+                case "postDisliked":
+                    session_start();
+                    echo '<script>console.log("postDislikes")</script>';
+                    $this->feedController->PostDisliked();
+                    break;
                 case preg_match("/deleteuser[0-9]+/", $_GET["action"]) ? true : false:
                     $id = str_replace("deleteuser", "", $_GET["action"]);
                     session_start();

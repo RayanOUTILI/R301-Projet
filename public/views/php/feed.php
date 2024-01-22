@@ -30,6 +30,7 @@ if (isset($_SESSION['adresse_email'])) {
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="public/views/js/pagination.js"></script>
     <script src="public/views/js/likes.js"></script>
+    <script src="public/views/js/dislikes.js"></script>
     <title>Feed</title>
 </head>
 
@@ -52,9 +53,11 @@ if (isset($_SESSION['adresse_email'])) {
                 $textePost = $publication['texte'];
                 $datePost = $publication['date_publication'];
                 $likesCount = $publication['likes_count'];
+                $dislikesCount = $publication['dislikes_count'];
                 $commentsCount = $publication['comments_count'];
                 $images = $publication['link_img'];
                 $isLike = $publication['isLike'];
+                $isDislike = $publication['isDislike'];
                 ?>
                 <!-- $nomAuteur = "Rayan Outili"; // .post-container $post->getNom() et $post->getPrenom()
                 $photoProfil = "/assets/img/like.png"; // .post-container $post->getPhotoProfil()
@@ -108,6 +111,15 @@ if (isset($_SESSION['adresse_email'])) {
                         }
                         ?>
                     </div>
+                    <div class="icon dislike" data-id="<?php echo $idPost; ?>" id="dislikeBtn">
+                        <?php
+                        if ($isDislike == 1) {
+                            echo '<img src="' . $root_path . '/assets/img/dislike_red.png" alt="Dislike">';
+                        } else {
+                            echo '<img src="' . $root_path . '/assets/img/dislike.png" alt="Dislike">';
+                        }
+                        ?>
+                    </div>
                     <div class="icon comment">
                         <img src="<?php echo $root_path . "/assets/img/comment.png" ?>" alt="Comment">
                     </div>
@@ -119,6 +131,9 @@ if (isset($_SESSION['adresse_email'])) {
                 <div class="post-bottom">
                     <h1 class="title likes">
                         <?php echo "<span data-id='$idPost' class='nbLikes'>$likesCount</span>"; ?> likes
+                    </h1>
+                    <h1 class="title likes">
+                        <?php echo "<span data-id='$idPost' class='nbDislikes'>$dislikesCount</span>"; ?> dislikes
                     </h1>
 
 

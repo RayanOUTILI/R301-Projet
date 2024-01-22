@@ -261,6 +261,17 @@ class DAO
         return isset($result['nb_likes']) ? $result['nb_likes'] : 0;
     }
 
+    public function getNbDislikes($idPost)
+    {
+        $this->init_pdo();
+        $query = "SELECT COUNT(*) AS nb_dislikes FROM appreciations WHERE id_publication = :id_post AND type = 'dislike'";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        echo "<script>console.log('" . $result['nb_dislikes'] . "')</script>";
+        return isset($result['nb_dislikes']) ? $result['nb_dislikes'] : 0;
+    }
     public function getAuthorSurname($idPost)
     {
         $this->init_pdo();
@@ -370,19 +381,13 @@ class DAO
         $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if (count($result) > 0) 
-        {
-            if ($result[0]['statut'] == "accepte") 
-            {
+        if (count($result) > 0) {
+            if ($result[0]['statut'] == "accepte") {
                 return true;
-            } 
-            else 
-            {
+            } else {
                 return false;
             }
-        } 
-        else 
-        {
+        } else {
             return false;
         }
     }
@@ -407,7 +412,8 @@ class DAO
         $statement->execute();
     }
 
-    public function getIdFromMail($user_mail){
+    public function getIdFromMail($user_mail)
+    {
         $this->init_pdo();
         $query = "SELECT id_utilisateur FROM utilisateurs WHERE adresse_email = :user_mail";
         $statement = $this->pdo->prepare($query);
@@ -421,6 +427,22 @@ class DAO
     {
         $this->init_pdo();
         $query = "SELECT * FROM appreciations WHERE id_utilisateur = :user_id AND id_publication = :post_id AND type = 'like'";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->bindParam(':post_id', $post_id, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isDisliked($user_id, $post_id)
+    {
+        $this->init_pdo();
+        $query = "SELECT * FROM appreciations WHERE id_utilisateur = :user_id AND id_publication = :post_id AND type = 'dislike'";
         $statement = $this->pdo->prepare($query);
         $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $statement->bindParam(':post_id', $post_id, PDO::PARAM_INT);
@@ -518,7 +540,7 @@ class DAO
     }
 
 
-    
+
     public function __destruct()
     {
         $this->pdo = null;

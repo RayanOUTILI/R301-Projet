@@ -30,9 +30,11 @@ class FeedController extends Controller
             $publication["photo_profil"] = $this->_mainDao->getAuthorPhoto($publication['id_publication']);
             $publication["link_img"] = $this->_mainDao->getLinkImages($publication['id_publication']);
             $publication["likes_count"] = $this->_mainDao->getNbLikes($publication['id_publication']);
+            $publication["dislikes_count"] = $this->_mainDao->getNbDislikes($publication['id_publication']);
             $publication["comments_count"] = $this->_mainDao->getNbComments($publication['id_publication']);
             $user_id = $this->getMainDao()->selectFrom("utilisateurs", "id_utilisateur", "adresse_email = '" . $_SESSION['adresse_email'] . "'")[0]['id_utilisateur'];
             $publication["isLike"] = $this->_mainDao->isLiked($user_id, $publication['id_publication']);
+            $publication["isDislike"] = $this->_mainDao->isDisliked($user_id, $publication['id_publication']);
         }
 
         $variables = [
@@ -76,10 +78,24 @@ class FeedController extends Controller
             $post_id = $_GET['post_id'];
         }
         // si l'utilisateur n'a pas encore liké la publication
-        if (!$this->getMainDao()->selectFrom("appreciations", "*", "id_utilisateur = $user_id AND id_publication = $post_id")) {
+        if (!$this->getMainDao()->selectFrom("appreciations", "*", "id_utilisateur = $user_id AND id_publication = $post_id AND type = 'like'")) {
             $this->likePost($user_id, $post_id);
         } else {
             $this->unlikePost($user_id, $post_id);
+        }
+    }
+
+    public function postDisliked()
+    {
+        $user_id = $this->getMainDao()->selectFrom("utilisateurs", "id_utilisateur", "adresse_email = '" . $_SESSION['adresse_email'] . "'")[0]['id_utilisateur'];
+        if (isset($_GET['post_id'])) {
+            $post_id = $_GET['post_id'];
+        }
+        // si l'utilisateur n'a pas encore disliké la publication
+        if (!$this->getMainDao()->selectFrom("appreciations", "*", "id_utilisateur = $user_id AND id_publication = $post_id AND type = 'dislike'")) {
+            $this->dislikePost($user_id, $post_id);
+        } else {
+            $this->undislikePost($user_id, $post_id);
         }
     }
 
@@ -94,7 +110,21 @@ class FeedController extends Controller
 
     public function unlikePost($user_id, $post_id)
     {
-        $this->getMainDao()->deleteFrom("appreciations", "id_utilisateur = $user_id AND id_publication = $post_id");
+        $this->getMainDao()->deleteFrom("appreciations", "id_utilisateur = $user_id AND id_publication = $post_id AND type = like");
+    }
+
+    public function dislikePost($user_id, $post_id)
+    {
+        $this->getMainDao()->insertInto(
+            "appreciations",
+            array("id_utilisateur", "id_publication", "type", "commentaire"),
+            array($user_id, $post_id, "dislike", null)
+        );
+    }
+
+    public function undislikePost($user_id, $post_id)
+    {
+        $this->getMainDao()->deleteFrom("appreciations", "id_utilisateur = $user_id AND id_publication = $post_id AND type = dislike");
     }
 
 
