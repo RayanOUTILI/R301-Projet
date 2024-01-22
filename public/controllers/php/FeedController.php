@@ -18,6 +18,7 @@ class FeedController extends Controller
         $totalPublications = $this->getMainDao()->getNbPublications($_SESSION['adresse_email']);
         $postsPerPage = 5;
         $totalPages = ceil($totalPublications / $postsPerPage);
+        echo "<script>console.log(" . json_encode($_GET["page"]) . ")</script>";
         if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $totalPages) {
             $currentPage = $_GET['page'];
         } else {
