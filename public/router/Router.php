@@ -32,16 +32,13 @@ class Router
 
     public function route()
     {
-        if (isset($_GET["action"])) 
-        {
-            if(isset($GLOBALS["is_connected"]) && $GLOBALS['is_connected'] == false && $_GET["action"] != "form" && $_GET["action"] != "login" && $_GET["action"] != "signup")
-            {
+        if (isset($_GET["action"])) {
+            if (isset($GLOBALS["is_connected"]) && $GLOBALS['is_connected'] == false && $_GET["action"] != "form" && $_GET["action"] != "login" && $_GET["action"] != "signup") {
                 echo "Vous devez être connecté pour accéder à cette page";
                 $this->formController->render();
                 return;
             }
-            switch ($_GET["action"]) 
-            {
+            switch ($_GET["action"]) {
                 case "form":
                     $this->formController->render();
                     break;
@@ -82,6 +79,11 @@ class Router
                         $this->adminBoardController->submitForm();
                     else
                         $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
+                    break;
+                case "postLiked":
+                    session_start();
+                    echo '<script>console.log("postLikes")</script>';
+                    $this->feedController->PostLiked();
                     break;
                 case preg_match("/deleteuser[0-9]+/", $_GET["action"]) ? true : false:
                     $id = str_replace("deleteuser", "", $_GET["action"]);
@@ -125,41 +127,35 @@ class Router
                     else
                         $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
                     break;
-                case preg_match("/^profile[0-9]+$/" , $_GET["action"]) ? true : false:
-                
+                case preg_match("/^profile[0-9]+$/", $_GET["action"]) ? true : false:
+
                     $id = str_replace("profile", "", $_GET["action"]);
                     session_start();
                     if ($_SESSION['is_admin'] == true)
                         $this->otherProfileController->render($id);
                     else
                         $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
-                
+
                     break;
-                
+
                 case preg_match("/^blockContent[0-9]+$/", $_GET["action"]) ? true : false:
                     $id = str_replace("blockContent", "", $_GET["action"]);
                     $this->adminBoardController->blockContent($id);
                     break;
                 default:
-                  
+
                     break;
             }
-        } 
-        else 
-        {
-            if(isset($_GLOBALS['is_connected']) == false)
-            {
+        } else {
+            if (isset($_GLOBALS['is_connected']) == false) {
                 $GLOBALS['is_connected'] = false;
             }
-            if($GLOBALS['is_connected'] == true)
-            {
+            if ($GLOBALS['is_connected'] == true) {
                 $this->feedController->render();
-            }
-            else 
-            {
+            } else {
                 $this->formController->render();
             }
-        } 
+        }
 
     }
 

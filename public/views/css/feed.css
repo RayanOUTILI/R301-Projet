@@ -60,6 +60,11 @@ body {
     padding-left: 7px;
 }
 
+.icon.likes.active img {
+    color: #F44336;
+    filter: brightness(3);
+}
+
 .text {
 
     font-size: 10px;

@@ -417,6 +417,22 @@ class DAO
         return isset($result['id_utilisateur']) ? $result['id_utilisateur'] : 0;
     }
 
+    public function isLiked($user_id, $post_id)
+    {
+        $this->init_pdo();
+        $query = "SELECT * FROM appreciations WHERE id_utilisateur = :user_id AND id_publication = :post_id AND type = 'like'";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->bindParam(':post_id', $post_id, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
 

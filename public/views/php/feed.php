@@ -13,9 +13,7 @@ if (isset($_SESSION['adresse_email'])) {
     $adresse_email_secours = $_SESSION['adresse_email_secours'];
     $photo_profil = $_SESSION['photo_profil'];
 
-} 
-else 
-{
+} else {
     header("Location: index.php?action=form");
 }
 ?>
@@ -31,6 +29,7 @@ else
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="public/views/js/pagination.js"></script>
+    <script src="public/views/js/likes.js"></script>
     <title>Feed</title>
 </head>
 
@@ -49,11 +48,13 @@ else
                 $prenomAuteur = $publication['prenom'];
                 $photoProfil = $publication['photo_profil'];
                 $idPost = $publication['id_publication'];
+                $GLOBALS['id_post'] = $idPost;
                 $textePost = $publication['texte'];
                 $datePost = $publication['date_publication'];
                 $likesCount = $publication['likes_count'];
                 $commentsCount = $publication['comments_count'];
                 $images = $publication['link_img'];
+                $isLike = $publication['isLike'];
                 ?>
                 <!-- $nomAuteur = "Rayan Outili"; // .post-container $post->getNom() et $post->getPrenom()
                 $photoProfil = "/assets/img/like.png"; // .post-container $post->getPhotoProfil()
@@ -75,28 +76,22 @@ else
 
                 <div class="photo-post">
                     <?php
-                    
-                    if($images == "")
-                    {
+
+                    if ($images == "") {
                         echo "";
-                    }
-                    else
-                    {
+                    } else {
                         $mime = mime_content_type($images);
-                        if($mime == "video/mp4")
-                        {
+                        if ($mime == "video/mp4") {
                             echo "<video width='320' height='240' controls>";
                             echo "<source src='$images' type='video/mp4'>";
                             echo "</video>";
-                        }
-                        else if(preg_match('/^image\/[a-z]+$/', $mime))
-                        {
+                        } else if (preg_match('/^image\/[a-z]+$/', $mime)) {
                             echo "<img src='$images' alt=''>";
                         }
-                        
-                       
 
-                       
+
+
+
                     }
 
                     ?>
@@ -104,8 +99,14 @@ else
                 </div>
 
                 <div class="post-middle">
-                    <div class="icon like">
-                        <img src="<?php echo $root_path . "/assets/img/like.png" ?>" alt="Like">
+                    <div class="icon like" data-id="<?php echo $idPost; ?>" id="likeBtn">
+                        <?php
+                        if ($isLike == 1) {
+                            echo '<img src="' . $root_path . '/assets/img/like_red.png" alt="Like">';
+                        } else {
+                            echo '<img src="' . $root_path . '/assets/img/like.png" alt="Like">';
+                        }
+                        ?>
                     </div>
                     <div class="icon comment">
                         <img src="<?php echo $root_path . "/assets/img/comment.png" ?>" alt="Comment">
@@ -117,8 +118,9 @@ else
 
                 <div class="post-bottom">
                     <h1 class="title likes">
-                        <?php echo $likesCount; ?> likes
+                        <?php echo "<span data-id='$idPost' class='nbLikes'>$likesCount</span>"; ?> likes
                     </h1>
+
 
                     <div class="text">
                         <span>

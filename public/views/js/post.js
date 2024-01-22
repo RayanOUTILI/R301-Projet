@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
             imagesPreview.appendChild(img);
         }
 
-        // Ajoute la visibilité à l'aperçu
+        //ajoute la visibilité à l'aperçu
         document.getElementById('preview-visibility').innerText = 'Visibilité : ' + document.querySelector('[name="post_visibility"]').value;
     }
 });
