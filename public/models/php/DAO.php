@@ -230,8 +230,7 @@ class DAO
     public function getPublication($userMail)
     {
         $this->init_pdo();
-        $query = "SELECT * FROM publication WHERE adresse_email = '$userMail'";
-        $query = "SELECT * FROM publications JOIN utilisateurs ON publications.id_utilisateur = utilisateurs.id_utilisateur WHERE utilisateurs.adresse_email = '$userMail'";
+        $query = "SELECT * FROM publications JOIN utilisateurs ON publications.id_utilisateur = utilisateurs.id_utilisateur WHERE utilisateurs.adresse_email = '$userMail' AND publications.est_bloque = 0 ORDER BY date_publication DESC";
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -492,6 +491,14 @@ class DAO
         } else {
             return false;
         }
+    }
+
+    public function blockContent($publication_id)
+    {
+        $this->init_pdo();
+        $query = "UPDATE publications SET est_bloque = 1 WHERE id_publication = $publication_id";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
     }
 
 

@@ -20,3 +20,32 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('preview-visibility').innerText = 'Visibilité : ' + document.querySelector('[name="post_visibility"]').value;
     }
 });
+
+const files_from_input = document.getElementById('post_images');
+
+files_from_input.addEventListener('change', function () 
+{
+    const files = this.files;
+    files.forEach(file =>
+    {
+        if(file.length > 1024*1024)
+        {
+            displayError('Le fichier ne doit pas dépasser 1Mo');
+            const button = document.getElementById('submit_post');
+            button.disabled = true;
+            return;
+        }
+    });
+
+});
+    
+  
+
+
+
+function displayError(message) 
+{
+    let error = document.getElementById('error');
+    error.innerText = message;
+    error.style.display = "block";
+}

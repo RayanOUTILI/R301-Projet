@@ -84,6 +84,21 @@ class AdminBoardController extends Controller
         header("Location: index.php?action=admin");
     }
 
+    public function blockContent($id)
+    {
+        $this->getMainDao()->blockContent($id);
+        $this->render();
+    }
+    
+
+    public function deletePost($id)
+    {
+        $this->getMainDao()->deleteFrom("publications","id_publication=$id");
+        $this->render();
+        header("Location: index.php?action=admin");
+    }
+    
+
 
 
 }

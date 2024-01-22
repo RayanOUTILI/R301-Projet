@@ -1,5 +1,7 @@
 <body>
-    <?php include_once('nav.php'); ?>
+    <?php include_once('nav.php'); 
+    $is_admin = $_SESSION["is_admin"];
+    ?>
 
     <header>
         <div class="container">
@@ -56,7 +58,8 @@
         <div class="container">
             <div class="gallery">
                 <?php
-                foreach ($user_publications as $publication) {
+                foreach ($user_publications as $publication) 
+                {
                     if (isset($publication["link_img"])) {
                         $link_img = $publication["link_img"];
                     } else {
@@ -72,17 +75,24 @@
                     } else {
                         $comments_count = "";
                     }
-                    echo "<div class=\"gallery-item\" tabindex=\"0\">
-                <img src=\"$link_img\">
-                <div class=\"gallery-item-info\">
+                     
+                
+                echo "<div class=\"gallery-item\" tabindex=\"0\">";
+                if($is_admin)
+                {echo "<button class=\"profile-block-btn\" name=\"deletepublication\" id=". $publication["id_publication"] .">X</button>";}
+              
+                echo "<img src=\"$link_img\">";
+                
+                echo "<div class=\"gallery-item-info\">
                     <ul>
                         <li class=\"gallery-item-likes\"><span class=\"visually-hidden\">Likes:</span><i class=\"fas fa-heart\" aria-hidden=\"true\"></i> $likes_count</li>
                         <li class=\"gallery-item-comments\"><span class=\"visually-hidden\">Comments:</span><i class=\"fas fa-comment\" aria-hidden=\"true\"></i> $comments_count</li>
                     </ul>
                 </div>
-              </div>";
-                }
+              </div>";}
                 ?>
+                <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                <script src="public/views/js/block_content.js"></script>
             </div>
         </div>
     </main>

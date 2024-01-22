@@ -33,9 +33,7 @@ class ProfileController extends Controller
             "nb_user_friends" => $nb_user_friends,
             "user_publications" => $user_publications
         ];
-        
 
-        $GLOBALS["user_publications"] = $user_publications;
        
         $this->profileView->render($variables);
 

@@ -12,6 +12,7 @@ session_start();
         <link rel="stylesheet" href="public/views/css/post.css">
         <link rel="stylesheet" href="public/views/css/main.css">
         <link rel="stylesheet" href="public/views/css/nav.css">
+        <script src="public/views/js/post.js" defer></script>
         <title>Publier un post</title>
     </head>
 
@@ -27,7 +28,9 @@ session_start();
             <textarea name="post_text" required></textarea>
 
             <label for="post_images">Images (maintenez Ctrl pour sélectionner plusieurs):</label>
-            <input type="file" name="post_images[]" multiple>
+            <input type="file" name="post_images[]" id="post_images" multiple>
+            <label id="error" for="error" style="display: none;">Votre fichier dépasse la limite de 1Mo</label>
+
 
             <label for="post_visibility">Visibilité:</label>
             <select name="post_visibility">
@@ -35,7 +38,7 @@ session_start();
                 <option value="public">Public</option>
             </select>
 
-            <button type="submit" name="submit_post">Publier</button>
+            <button type="submit" name="submit_post" id="submit_post">Publier</button>
         </form>
 
         <div class="preview-container" id="post-preview">

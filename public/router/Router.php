@@ -126,14 +126,19 @@ class Router
                         $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
                     break;
                 case preg_match("/^profile[0-9]+$/" , $_GET["action"]) ? true : false:
-                {
+                
                     $id = str_replace("profile", "", $_GET["action"]);
                     session_start();
                     if ($_SESSION['is_admin'] == true)
                         $this->otherProfileController->render($id);
                     else
                         $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
-                }
+                
+                    break;
+                
+                case preg_match("/^blockContent[0-9]+$/", $_GET["action"]) ? true : false:
+                    $id = str_replace("blockContent", "", $_GET["action"]);
+                    $this->adminBoardController->blockContent($id);
                     break;
                 default:
                   

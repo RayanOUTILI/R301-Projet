@@ -55,7 +55,7 @@ require_once __DIR__ . "/headers/profileheader.php";
         <div class="container">
             <div class="gallery">
                 <?php
-                foreach ($GLOBALS["user_publications"] as $publication) {
+                foreach ($user_publications as $publication) {
                     if (isset($publication["link_img"])) {
                         $link_img = $publication["link_img"];
                     } else {
