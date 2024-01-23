@@ -15,12 +15,17 @@ class FeedController extends Controller
     public function render()
     {
         session_start();
+
+        if (isset($_POST['page'])) {
+            echo "<script>console.log('icicici', " . json_encode($_POST["page"]) . ")</script>";
+        }
+
+
         $totalPublications = $this->getMainDao()->getNbPublications($_SESSION['adresse_email']);
         $postsPerPage = 5;
         $totalPages = ceil($totalPublications / $postsPerPage);
-        echo "<script>console.log(" . json_encode($_GET["page"]) . ")</script>";
-        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $totalPages) {
-            $currentPage = $_GET['page'];
+        if (isset($_POST['page']) && $_POST['page'] > 0 && $_POST['page'] <= $totalPages) {
+            $currentPage = $_POST['page'];
         } else {
             $currentPage = 1;
         }

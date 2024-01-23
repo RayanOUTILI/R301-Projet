@@ -57,6 +57,15 @@ class Router
                 case "publish":
                     $this->postController->createNewPost();
                     break;
+                // // si c'est de la forme page=1, page=2, etc.
+                // case "$_GET[page]":
+                //     echo "<script>console.log('$_GET[page]')</script>";
+                //     $this->feedController->render();
+                //     break;
+                case "page":
+                    echo "<script>console.log('test')</script>";
+                    $this->feedController->render();
+                    break;
                 case "feed":
                     $this->feedController->render();
                     break;
@@ -166,4 +175,3 @@ class Router
 
 
 }
-?>

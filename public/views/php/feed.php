@@ -165,16 +165,19 @@ if (isset($_SESSION['adresse_email'])) {
     </div>
 
     <div class="pagination">
-        <?php if ($totalPages > 1): ?>
-            <a href="?page=<?php echo $currentPage - 1; ?>" class="pagination-link" <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>>&laquo; Page précédente</a>
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <a href="?page=<?php echo $i; ?>" class="pagination-link" <?php echo ($i == $currentPage) ? 'active' : ''; ?>>
-                    <?php echo $i; ?>
-                </a>
-            <?php endfor; ?>
-            <a href="?page=<?php echo $currentPage + 1; ?>" class="pagination-link" <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>>Page suivante &raquo;</a>
-        <?php endif; ?>
+        <form action="index.php?action=page" method="POST">
+            <?php if ($totalPages > 1): ?>
+                <button type="submit" name="page" value="<?php echo $currentPage - 1; ?>" class="pagination-link" <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>>&laquo; Page précédente</button>
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <button type="submit" name="page" value="<?php echo $i; ?>" class="pagination-link" <?php echo ($i == $currentPage) ? 'active' : ''; ?>>
+                        <?php echo $i; ?>
+                    </button>
+                <?php endfor; ?>
+                <button type="submit" name="page" value="<?php echo $currentPage + 1; ?>" class="pagination-link" <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>>Page suivante &raquo;</button>
+            <?php endif; ?>
+        </form>
     </div>
+
 </body>
 
 </html>
