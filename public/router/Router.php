@@ -6,6 +6,7 @@ require_once __DIR__ . "/../controllers/php/FeedController.php";
 require_once __DIR__ . "/../controllers/php/AdminBoardController.php";
 require_once __DIR__ . "/../controllers/php/FriendsController.php";
 require_once __DIR__ . "/../controllers/php/OtherProfileController.php";
+require_once __DIR__ . "/../controllers/php/SearchController.php";
 
 class Router
 {
@@ -17,6 +18,8 @@ class Router
     private $errorView;
     private $friendsController;
     private $otherProfileController;
+    private $searchController;
+
 
     public function __construct()
     {
@@ -27,6 +30,7 @@ class Router
         $this->friendsController = new FriendsController();
         $this->adminBoardController = new AdminBoardController();
         $this->otherProfileController = new OtherProfileController();
+        $this->searchController = new SearchController();
 
     }
 
@@ -68,6 +72,9 @@ class Router
                     break;
                 case "feed":
                     $this->feedController->render();
+                    break;
+                case "search":
+                    $this->searchController->render();
                     break;
                 case "friends":
                     $this->friendsController->render();

@@ -21,7 +21,7 @@ $root_path = str_replace("/www", "", $root_path);
             </a>
         </li>
         <li>
-            <a href="index.php?action=feed">
+            <a href="index.php?action=search">
                 <div class="icon">
                     <img src="<?php echo $root_path . "/assets/img/search.png" ?>" alt="Search">
                 </div>
