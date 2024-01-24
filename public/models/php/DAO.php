@@ -455,6 +455,18 @@ class DAO
         }
     }
 
+    public function getPublicationsByTime($dateDebut, $dateFin)
+    {
+        $this->init_pdo();
+        $query = "SELECT * FROM publications WHERE date_publication BETWEEN :dateDebut AND :dateFin";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':dateDebut', $dateDebut, PDO::PARAM_STR);
+        $statement->bindParam(':dateFin', $dateFin, PDO::PARAM_STR);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return isset($result) ? $result : array();
+    }
+
 
 
 

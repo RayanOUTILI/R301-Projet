@@ -6,7 +6,7 @@ $root_path = str_replace("/www", "", $root_path);
 ?>
 
 <nav id="menu">
-    <form method="POST" id="search" action="">
+    <form method="POST" id="search" action="index.php?action=search">
         <div class="search-box">
             <input type="text" name="request" placeholder="Rechercher...">
             <button type="submit"><i class="fa fa-search"></i></button>
@@ -49,9 +49,8 @@ $root_path = str_replace("/www", "", $root_path);
             </a>
         </li>
         <?php
-        
-        if($_SESSION['is_admin'] == true)
-        {
+
+        if ($_SESSION['is_admin'] == true) {
             echo '<li>
             <a href="index.php?action=admin">
                 <div class="icon">
@@ -60,7 +59,7 @@ $root_path = str_replace("/www", "", $root_path);
             </a>
             </li>';
         }
-        
+
         ?>
     </ul>
 </nav>
