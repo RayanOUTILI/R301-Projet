@@ -4,7 +4,7 @@ require __DIR__ . "/headers/formheader.php";
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form method="POST" action="index.php?action=signup">
+            <form enctype="multipart/form-data" method="POST" action="index.php?action=signup">
                 <input type="text" placeholder="Nom" name="nom" />
                 <input type="text" placeholder="Prénom" name="prenom" />
                 <input type="email" placeholder="Mail" name="adresse_email" />

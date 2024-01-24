@@ -7,6 +7,7 @@ require_once __DIR__ . "/../controllers/php/AdminBoardController.php";
 require_once __DIR__ . "/../controllers/php/FriendsController.php";
 require_once __DIR__ . "/../controllers/php/OtherProfileController.php";
 require_once __DIR__ . "/../controllers/php/SearchController.php";
+require_once __DIR__ . "/../controllers/php/CommentController.php";
 
 class Router
 {
@@ -20,6 +21,8 @@ class Router
     private $otherProfileController;
     private $searchController;
 
+    private $commentController;
+
 
     public function __construct()
     {
@@ -31,6 +34,7 @@ class Router
         $this->adminBoardController = new AdminBoardController();
         $this->otherProfileController = new OtherProfileController();
         $this->searchController = new SearchController();
+        $this->commentController = new CommentController();
 
     }
 
@@ -103,6 +107,19 @@ class Router
                     session_start();
                     echo '<script>console.log("postDislikes")</script>';
                     $this->feedController->PostDisliked();
+                    break;
+                case "comment":
+                    session_start();
+                    $this->commentController->createNewComment();
+                    break;
+                case "postCommented":
+                    session_start();
+                    echo '<script>console.log("postCommented")</script>';
+                    $postId = $_POST['postId'];
+                    echo "<script>console.log('$postId')</script>";
+                    $this->commentController->renderId($postId);
+                    $this->commentController->render();
+                    $this->commentController->displayComments($postId);
                     break;
                 case preg_match("/deleteuser[0-9]+/", $_GET["action"]) ? true : false:
                     $id = str_replace("deleteuser", "", $_GET["action"]);

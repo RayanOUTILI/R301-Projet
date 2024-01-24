@@ -31,6 +31,7 @@ if (isset($_SESSION['adresse_email'])) {
     <script src="public/views/js/pagination.js"></script>
     <script src="public/views/js/likes.js"></script>
     <script src="public/views/js/dislikes.js"></script>
+    <script src="public/views/js/comment.js"></script>
     <title>Feed</title>
 </head>
 
@@ -121,8 +122,15 @@ if (isset($_SESSION['adresse_email'])) {
                         ?>
                     </div>
                     <div class="icon comment">
-                        <img src="<?php echo $root_path . "/assets/img/comment.png" ?>" alt="Comment">
+                        <form action="index.php?action=postCommented" method="post">
+                            <input type="hidden" name="postId" value="<?php echo $idPost; ?>">
+                            <button type="submit" style="border: none; background: none; cursor: pointer;">
+                                <img src="<?php echo $root_path . "/assets/img/comment.png" ?>" alt="Comment">
+                            </button>
+                        </form>
                     </div>
+
+
                     <div class="icon flag">
                         <img src="<?php echo $root_path . "/assets/img/bookmark.png" ?>" alt="BookMark">
                     </div>
@@ -177,6 +185,7 @@ if (isset($_SESSION['adresse_email'])) {
             <?php endif; ?>
         </form>
     </div>
+
 
 </body>
 

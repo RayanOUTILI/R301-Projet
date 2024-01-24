@@ -211,6 +211,15 @@ class DAO
         return $result;
     }
 
+    public function executeQuery($query, $params)
+    {
+        $this->init_pdo();
+        $statement = $this->pdo->prepare($query);
+        $statement->execute($params);
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
     public function getLastInsertedId()
     {
         $this->init_pdo();
@@ -308,7 +317,7 @@ class DAO
     public function getNbComments($idPost)
     {
         $this->init_pdo();
-        $query = "SELECT COUNT(*) AS nb_comments FROM appreciations WHERE id_publication = :id_post AND commentaire IS NOT NULL";
+        $query = "SELECT COUNT(*) AS nb_comments FROM appreciations WHERE id_publication = :id_post AND commentaire IS NOT NULL AND commentaire != '' ";
         $statement = $this->pdo->prepare($query);
         $statement->bindParam(':id_post', $idPost, PDO::PARAM_INT);
         $statement->execute();
@@ -462,6 +471,31 @@ class DAO
         $statement = $this->pdo->prepare($query);
         $statement->bindParam(':dateDebut', $dateDebut, PDO::PARAM_STR);
         $statement->bindParam(':dateFin', $dateFin, PDO::PARAM_STR);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return isset($result) ? $result : array();
+    }
+
+    public function createNewComment($user_id, $post_id, $comment)
+    {
+        $this->init_pdo();
+        echo "<script>console.log('$user_id')</script>";
+        echo "<script>console.log('$post_id')</script>";
+        echo "<script>console.log('$comment')</script>";
+        $query = "INSERT INTO appreciations (id_utilisateur, id_publication, commentaire) VALUES (:user_id, :post_id, :comment)";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->bindParam(':post_id', $post_id, PDO::PARAM_INT);
+        $statement->bindParam(':comment', $comment, PDO::PARAM_STR);
+        $statement->execute();
+    }
+
+    public function getComments($post_id)
+    {
+        $this->init_pdo();
+        $query = "SELECT * FROM appreciations JOIN utilisateurs ON appreciations.id_utilisateur = utilisateurs.id_utilisateur WHERE id_publication = :post_id AND commentaire IS NOT NULL";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':post_id', $post_id, PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return isset($result) ? $result : array();
