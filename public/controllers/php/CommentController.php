@@ -52,21 +52,32 @@ class CommentController extends Controller
     public function displayComments($postId)
     {
         $comments = $this->getMainDao()->getComments($postId);
-        foreach ($comments as $comment) {
-            $user = $this->getMainDao()->selectFrom("utilisateurs", "nom", "id_utilisateur = " . $comment['id_utilisateur'])[0];
-            $commentaire = $comment['commentaire'];
-            $date = $comment['date_appreciation'];
+
+        $comments = array_filter($comments, function ($comment) {
+            return !empty($comment['commentaire']);
+        });
+
+        if (!empty($comments)) {
+            foreach ($comments as $comment) {
+                $user = $this->getMainDao()->selectFrom("utilisateurs", "nom", "id_utilisateur = " . $comment['id_utilisateur'])[0];
+                $commentaire = $comment['commentaire'];
+                $date = $comment['date_appreciation'];
+            }
+
+            $variables = [
+                "comments" => $comments,
+                "user" => $user,
+                "commentaire" => $commentaire,
+                "date" => $date
+            ];
+
+            $this->commentView->render($variables);
+        } else {
+            $this->commentView->render(["rien" => "rien"]);
         }
 
-        $variables = [
-            "comments" => $comments,
-            "user" => $user,
-            "commentaire" => $commentaire,
-            "date" => $date
-        ];
 
 
-        $this->commentView->render($variables);
     }
 
 

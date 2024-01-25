@@ -15,24 +15,29 @@
 
     <!-- on affiche tous les commentaires  -->
     <div class="comment-container">
-        <?php foreach ($comments as $comment): ?>
-            <!-- on affiche le nom, prenom, la date et le commentaire -->
-            <div class="comment">
-                <div class="comment-header">
-                    <div class="comment-author">
-                        <div class="comment-author-name">
-                            <?php echo $comment['nom'] . " " . $comment['prenom'] ?>
+        <?php if (empty($comments)): ?>
+            <p>Soyez le premier à commenter !</p>
+        <?php else: ?>
+            <?php foreach ($comments as $comment): ?>
+                <!-- on affiche le nom, prenom, la date et le commentaire -->
+                <div class="comment">
+                    <div class="comment-header">
+                        <div class="comment-author">
+                            <div class="comment-author-name">
+                                <?php echo $comment['nom'] . " " . $comment['prenom'] ?>
+                            </div>
+                        </div>
+                        <div class="comment-date">
+                            <?php echo "le : " . $comment['date_appreciation'] ?>
                         </div>
                     </div>
-                    <div class="comment-date">
-                        <?php echo "le : " . $comment['date_appreciation'] ?>
+                    <div class="comment-text">
+                        <?php echo "a commenté : " . $comment['commentaire'] ?>
                     </div>
                 </div>
-                <div class="comment-text">
-                    <?php echo "a commenté : " . $comment['commentaire'] ?>
-                </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
     </div>
 
 </body>

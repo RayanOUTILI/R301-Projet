@@ -102,6 +102,14 @@ if (isset($_SESSION['adresse_email'])) {
 
                 </div>
 
+                <div class="text">
+                    <span>
+                        <p>
+                            <?php echo $textePost; ?>
+                        </p>
+                    </span>
+                </div>
+
                 <div class="post-middle">
                     <div class="icon like" data-id="<?php echo $idPost; ?>" id="likeBtn">
                         <?php
@@ -144,18 +152,14 @@ if (isset($_SESSION['adresse_email'])) {
                         <?php echo "<span data-id='$idPost' class='nbDislikes'>$dislikesCount</span>"; ?> dislikes
                     </h1>
 
-
-                    <div class="text">
-                        <span>
-                            <p>
-                                <?php echo $textePost; ?>
-                            </p>
-                        </span>
-                    </div>
-
                     <div class="text2">
                         <p>
-                            <?php echo $commentsCount; ?> commentaires
+                        <form action="index.php?action=postCommented" method="post">
+                            <input type="hidden" name="postId" value="<?php echo $idPost; ?>">
+                            <button type="submit" style="border: none; color: blue; background: none; cursor: pointer;">
+                                <?php echo $commentsCount; ?> commentaires
+                            </button>
+                        </form>
                         </p>
                     </div>
 

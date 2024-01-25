@@ -163,6 +163,15 @@ class Router
                     else
                         $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
                     break;
+                // si on vuet envoyer un message
+                case preg_match("/^sendmessage[0-9]+$/", $_GET["action"]) ? true : false:
+                    $id = str_replace("sendmessage", "", $_GET["action"]);
+                    session_start();
+                    if ($_SESSION['is_admin'] == true)
+                        $this->adminBoardController->sendMessage($id);
+                    else
+                        $this->errorView->render("Vous n'avez pas les droits pour accéder à cette page");
+                    break;
                 case preg_match("/^profile[0-9]+$/", $_GET["action"]) ? true : false:
 
                     $id = str_replace("profile", "", $_GET["action"]);

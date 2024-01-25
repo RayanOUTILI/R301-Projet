@@ -1,55 +1,50 @@
-.admin-search-bar-box form
-{
-    display:flex;
+.admin-search-bar-box {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+}
+
+.admin-search-bar-box form {
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 2.5%;
-    border-radius: 5px;
     margin-top: 2%;
-
-
 }
 
-#searchbar
-{
+#searchbar {
     width: 50%;
-    height: 75%;
+    padding: 5px;
     border: 1px solid #e3e3e3;
     border-radius: 5px;
-    padding: 5px;
     font-size: 1.5em;
 }
 
-#searchbar:focus
-{
+#searchbar:focus {
     outline: none;
 }
 
-#searchbar::placeholder
-{
+#searchbar::placeholder {
     color: #b3b3b3;
 }
 
-#searchbar:focus::placeholder
-{
+#searchbar:focus::placeholder {
     color: #e3e3e3;
 }
 
-.admin-search-results
-{
+.admin-search-results {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-    
 }
 
-.admin-search-results form
-{
-    flex:50%;
+.admin-search-results form {
+    flex: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,57 +52,44 @@
     width: 50%;
 }
 
-.admin-search-results form p
-{
+.admin-search-results form p {
     margin: 0;
     padding: 0;
     font-size: 0.75rem;
     font-weight: bold;
 }
 
-.admin-blocked
-{
-    color:#f73838;
+.admin-blocked {
+    color: #f73838;
 }
 
-.admin-notblocked
-{
-    color:#8fe058;
+.admin-notblocked {
+    color: #8fe058;
 }
 
-.supprimerprofil
-{
+.supprimerprofil,
+.bloquerprofil,
+.debloquerprofil {
     border: 1px solid #e3e3e3;
     border-radius: 5px;
     padding: 5px;
     font-size: 0.75em;
     cursor: pointer;
+}
+
+.supprimerprofil {
     background-color: #f73838;
 }
 
-.bloquerprofil
-{
-    border: 1px solid #e3e3e3;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 0.75em;
-    cursor: pointer;
+.bloquerprofil {
     background-color: #ca9e9e;
-    
 }
 
-.debloquerprofil
-{
-    border: 1px solid #e3e3e3;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 0.75em;
-    cursor: pointer;
+.debloquerprofil {
     background-color: #8fe058;
 }
 
-.resultdiv
-{
+.resultdiv {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -121,8 +103,7 @@
     cursor: pointer;
 }
 
-.resultinfo
-{
+.resultinfo {
     width: 100%;
     height: 10%;
     display: flex;
@@ -130,25 +111,42 @@
     align-items: center;
     flex-direction: column;
     font-size: 1.2rem;
-    
 }
 
-.resultinfo p
-{
+.resultinfo p {
     margin: 0;
     padding: 0;
 }
 
-.resultinfo p:nth-child(1)
-{
+.resultinfo p:nth-child(1) {
     font-weight: bold;
     font-size: 1.5rem;
 }
 
-
-.resultimg
-{
+.resultimg {
     width: 10%;
     height: 10%;
+}
 
+#admin_user_search {
+    padding: 5px 10px;
+    background-color: #c1c8fa;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#admin_user_search:hover {
+    background-color: #c9ffcc;
+}
+
+#adminipt {
+    display: none;
+}
+
+.success-message {
+    color: green;
+    font-size: 1.5rem;
+    font-weight: bold;
 }

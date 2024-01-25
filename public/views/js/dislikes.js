@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     dislikesCount.forEach(function (likes) {
                         if (likes.getAttribute('data-id') == postId) {
                             if (likeButton.classList.contains('active')) {
-                                likes.innerText = parseInt(likes.innerText) + 1;
-                            } else {
                                 likes.innerText = parseInt(likes.innerText) - 1;
+                            } else {
+                                likes.innerText = parseInt(likes.innerText) + 1;
                             }
                         }
                     });

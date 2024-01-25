@@ -339,6 +339,21 @@ class DAO
         }
     }
 
+    public function getNbTotalPublications()
+    {
+        // retourne le nb total de publications en enlevant celles bloquées 
+        $this->init_pdo();
+        $query = "SELECT COUNT(*) AS nb_publications FROM publications WHERE est_bloque = 0";
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return $result['nb_publications'];
+        } else {
+            return 0;
+        }
+    }
+
 
     public function getPaginatedPublications($postsPerPage, $currentPage)
     {
@@ -388,6 +403,26 @@ class DAO
         $statement = $this->pdo->prepare($query);
         $statement->bindParam(':myId', $myId, PDO::PARAM_INT);
         $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result) > 0) {
+            if ($result[0]['statut'] == "accepte") {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function areTheyFriends($mail1, $mail2)
+    {
+        $this->init_pdo();
+        $query = "SELECT * FROM amis WHERE (id_utilisateur_demandeur = (SELECT id_utilisateur FROM utilisateurs WHERE adresse_email = :mail1) AND id_utilisateur_receveur = (SELECT id_utilisateur FROM utilisateurs WHERE adresse_email = :mail2)) OR (id_utilisateur_demandeur = (SELECT id_utilisateur FROM utilisateurs WHERE adresse_email = :mail2) AND id_utilisateur_receveur = (SELECT id_utilisateur FROM utilisateurs WHERE adresse_email = :mail1))";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':mail1', $mail1, PDO::PARAM_STR);
+        $statement->bindParam(':mail2', $mail2, PDO::PARAM_STR);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         if (count($result) > 0) {
@@ -499,6 +534,50 @@ class DAO
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return isset($result) ? $result : array();
+    }
+
+    public function getVisibility($post_id)
+    {
+        $this->init_pdo();
+        $query = "SELECT visibilite FROM publications WHERE id_publication = :post_id";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':post_id', $post_id, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return isset($result['visibilite']) ? $result['visibilite'] : "";
+    }
+
+    public function getAuthorEmail($post_id)
+    {
+        $this->init_pdo();
+        $query = "SELECT adresse_email FROM utilisateurs JOIN publications ON utilisateurs.id_utilisateur = publications.id_utilisateur WHERE publications.id_publication = :post_id";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':post_id', $post_id, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return isset($result['adresse_email']) ? $result['adresse_email'] : "";
+    }
+
+    public function isBlocked($post_id)
+    {
+        $this->init_pdo();
+        $query = "SELECT est_bloque FROM publications WHERE id_publication = :post_id";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':post_id', $post_id, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return isset($result['est_bloque']) ? $result['est_bloque'] : 0;
+    }
+
+    public function isBlockedUser($user_mail)
+    {
+        $this->init_pdo();
+        $query = "SELECT est_bloque FROM utilisateurs WHERE adresse_email = :user_mail";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':user_mail', $user_mail, PDO::PARAM_STR);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return isset($result['est_bloque']) ? $result['est_bloque'] : 0;
     }
 
 

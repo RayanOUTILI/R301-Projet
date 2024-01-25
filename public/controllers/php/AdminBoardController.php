@@ -14,55 +14,46 @@ class AdminBoardController extends Controller
 
     public function render()
     {
-        $rien = ["rien"=>"rien"];
+        $rien = ["rien" => "rien"];
         $this->adminBoardView->render($rien);
     }
 
     public function submitForm()
     {
-        if (isset($_POST['admin_user_search'])) 
-        {
+        if (isset($_POST['admin_user_search'])) {
             $this->cleanFormInput();
             $user_to_search = $_POST['searchbar'];
-            $split = explode(" ",$user_to_search);
+            $split = explode(" ", $user_to_search);
             $users = array();
-            foreach($split as $word)
-            {
-                $user = $this->getMainDao()->selectFromEquivalent("utilisateurs","$word");
-                if(!empty($user) && !in_array($user,$users))
-                {
-                    array_push($users,$user);
+            foreach ($split as $word) {
+                $user = $this->getMainDao()->selectFromEquivalent("utilisateurs", "$word");
+                if (!empty($user) && !in_array($user, $users)) {
+                    array_push($users, $user);
                 }
             }
-            
-            
-            if(empty($users))
-            {
+
+
+            if (empty($users)) {
                 $this->renderUserSearch("Aucun utilisateur trouvé");
-            }
-            else 
-            {
+            } else {
                 $this->renderUserSearch($users);
             }
-            
+
         }
     }
 
     public function renderUserSearch($users)
     {
-        if($users == "Aucun utilisateur trouvé")
-        {
+        if ($users == "Aucun utilisateur trouvé") {
             $this->adminBoardView->renderNoUserFound();
-        }
-        else 
-        {
+        } else {
             $this->adminBoardView->renderUserSearch($users);
         }
     }
 
     public function blockUser($id)
     {
-        
+
         $this->getMainDao()->block_user($id);
         $this->render();
         header("Location: index.php?action=admin");
@@ -70,7 +61,7 @@ class AdminBoardController extends Controller
 
     public function unblockUser($id)
     {
-        
+
         $this->getMainDao()->unblock_user($id);
         $this->render();
         header("Location: index.php?action=admin");
@@ -78,8 +69,8 @@ class AdminBoardController extends Controller
 
     public function deleteAccount($id)
     {
-       
-        $this->getMainDao()->deleteFrom("utilisateurs","id_utilisateur=$id");
+
+        $this->getMainDao()->deleteFrom("utilisateurs", "id_utilisateur=$id");
         $this->render();
         header("Location: index.php?action=admin");
     }
@@ -89,15 +80,23 @@ class AdminBoardController extends Controller
         $this->getMainDao()->blockContent($id);
         $this->render();
     }
-    
+
 
     public function deletePost($id)
     {
-        $this->getMainDao()->deleteFrom("publications","id_publication=$id");
+        $this->getMainDao()->deleteFrom("publications", "id_publication=$id");
         $this->render();
         header("Location: index.php?action=admin");
     }
-    
+
+    public function sendMessage($id)
+    {
+        // on affiche une popup pour envoyer un message 
+        $this->adminBoardView->sendMessage($id);
+
+
+    }
+
 
 
 
