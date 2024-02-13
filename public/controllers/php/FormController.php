@@ -69,7 +69,7 @@ class FormController extends Controller
                 }
 
                 //chemin du projet pour suppr le chemin absolu apre
-                $project_root = '/home/or201305/www/R102/TD5/js/social-network/';
+                $project_root = '/home/or201305/www/R301-Projet/';
 
                 // on suppr ce qui suit public
                 $relative_path = str_replace($project_root, '', $upload_path);

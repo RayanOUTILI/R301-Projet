@@ -79,7 +79,7 @@ if (isset($_SESSION['adresse_email'])) {
 
                 <div class="post-top">
                     <span class="avatar">
-                        <img src="<?php echo '/~or201305/R102/TD5/js/social-network/' . $photoProfil; ?>" alt="Avatar">
+                        <img src="<?php echo '/~or201305/R301-Projet/' . $photoProfil; ?>" alt="Avatar">
                     </span>
                     <h1 class="title">
                         <p>

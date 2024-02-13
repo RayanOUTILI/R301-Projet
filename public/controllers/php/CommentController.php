@@ -21,7 +21,6 @@ class CommentController extends Controller
 
     public function renderId($id)
     {
-        echo "<script>console.log('ef,ekpf,ekpf,ekpf,kf,ekfe,fefk')</script>";
         $this->postId = $id;
 
         echo '<div id="commentModal" class="modal">';

@@ -50,11 +50,11 @@ class AdminBoardView extends View
         echo "<script>
 
         const deleteButton = document.querySelectorAll('button.supprimerprofil');
-        console.log(deleteButton);
+        // console.log(deleteButton);
         const blockButton = document.querySelectorAll('button.bloquerprofil');
-        console.log(blockButton);
+        // console.log(blockButton);
         const unblockButton = document.querySelectorAll('button.debloquerprofil');
-        console.log(unblockButton);
+        // console.log(unblockButton);
         const sendMessageButton = document.querySelectorAll('button.envoyermessage');
         deleteButton.forEach((button) => {
             button.addEventListener('click', (e) => {

@@ -23,7 +23,7 @@ class PostController extends Controller
     public function createNewPost()
     {
         if (isset($_POST['submit_post'])) {
-            
+
             $this->render();
             $user_id = $this->getMainDao()->selectFrom("utilisateurs", "id_utilisateur", "adresse_email = '" . $_SESSION['adresse_email'] . "'")[0]['id_utilisateur'];
 
@@ -51,7 +51,7 @@ class PostController extends Controller
                 }
 
                 //chemin du projet pour suppr le chemin absolu apre
-                $project_root = '/home/or201305/www/R102/TD5/js/social-network/';
+                $project_root = '/home/or201305/www/R301-Projet/';
 
                 // on suppr ce qui suit public
                 $relative_path = str_replace($project_root, '', $upload_path);
@@ -69,8 +69,7 @@ class PostController extends Controller
                 } else {
                     echo "Erreur de téléchargement !\n";
                 }
-            }
-            else{
+            } else {
                 echo "Erreur de téléchargement, fichier trop volumineux (1 Mo maximum) !\n";
             }
         }

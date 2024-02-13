@@ -17,7 +17,7 @@ class FeedController extends Controller
         session_start();
 
         if (isset($_POST['page'])) {
-            echo "<script>console.log('icicici', " . json_encode($_POST["page"]) . ")</script>";
+            // echo "<script>console.log('icicici', " . json_encode($_POST["page"]) . ")</script>";
         }
 
 
@@ -30,8 +30,8 @@ class FeedController extends Controller
             $currentPage = 1;
         }
         // on affiche le nombre de publications par page
-        echo "<script>console.log('icicici', " . json_encode($totalPublications) . ")</script>";
-        echo "<script>console.log('icicici', " . json_encode($postsPerPage) . ")</script>";
+        // echo "<script>console.log('icicici', " . json_encode($totalPublications) . ")</script>";
+        // echo "<script>console.log('icicici', " . json_encode($postsPerPage) . ")</script>";
         $limited_publications = $this->getMainDao()->getPaginatedPublications($postsPerPage, $currentPage); //on limite le nombre de publications à 5 par page
         foreach ($limited_publications as &$publication) {
             $publication["nom"] = $this->_mainDao->getAuthorSurname($publication['id_publication']);
@@ -52,22 +52,22 @@ class FeedController extends Controller
         // + si le post a été bloqué 
         $limited_publications = array_filter($limited_publications, function ($publication) {
             // si le post a été bloqué on ne l'affiche pas
-            echo "<script>console.log('icicici', " . json_encode($publication['texte']) . ")</script>";
+            // echo "<script>console.log('icicici', " . json_encode($publication['texte']) . ")</script>";
             if ($this->getMainDao()->isBlocked($publication['id_publication'])) {
-                echo "<script>console.log('bloqué')</script>";
+                // echo "<script>console.log('bloqué')</script>";
                 return false;
             }
             // si l'auteur du post a été bloqué 
             if ($this->getMainDao()->isBlockedUser($publication['adresse_email'])) {
-                echo "<script>console.log('bloqué2')</script>";
+                // echo "<script>console.log('bloqué2')</script>";
                 return false;
             }
             // si c'est mon post on retourne true
             if ($publication['adresse_email'] == $_SESSION['adresse_email']) {
-                echo "<script>console.log('mon post')</script>";
+                // echo "<script>console.log('mon post')</script>";
                 return true;
             }
-            echo "<script>console.log('pas mon post')</script>";
+            // echo "<script>console.log('pas mon post')</script>";
             return $publication['visibilite'] == 'public' || $this->getMainDao()->areTheyFriends($_SESSION['adresse_email'], $publication['adresse_email']);
         });
 

@@ -66,7 +66,6 @@ class Router
                     $this->postController->createNewPost();
                     break;
                 case "page":
-                    echo "<script>console.log('test')</script>";
                     $this->feedController->render();
                     break;
                 case "feed":
@@ -100,12 +99,12 @@ class Router
                     break;
                 case "postLiked":
                     session_start();
-                    echo '<script>console.log("postLikes")</script>';
+                    // echo '<script>console.log("postLikes")</script>';
                     $this->feedController->PostLiked();
                     break;
                 case "postDisliked":
                     session_start();
-                    echo '<script>console.log("postDislikes")</script>';
+                    // echo '<script>console.log("postDislikes")</script>';
                     $this->feedController->PostDisliked();
                     break;
                 case "comment":
@@ -114,9 +113,9 @@ class Router
                     break;
                 case "postCommented":
                     session_start();
-                    echo '<script>console.log("postCommented")</script>';
+                    // echo '<script>console.log("postCommented")</script>';
                     $postId = $_POST['postId'];
-                    echo "<script>console.log('$postId')</script>";
+                    // echo "<script>console.log('$postId')</script>";
                     $this->commentController->renderId($postId);
                     $this->commentController->render();
                     $this->commentController->displayComments($postId);

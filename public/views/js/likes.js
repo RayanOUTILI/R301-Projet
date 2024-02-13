@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 },
                 error: function (xhr, status, error) {
-                    console.error('Erreur AJAX:', status, error);
+                    // console.error('Erreur AJAX:', status, error);
                 }
             });
         });

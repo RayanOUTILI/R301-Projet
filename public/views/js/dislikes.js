@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 type: 'GET',
                 data: { post_id: postId },
                 success: function (data) {
-                    console.log('Réponse du serveur :', data);
+                    // console.log('Réponse du serveur :', data);
 
                     likeButton.classList.toggle('active');
 
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 },
                 error: function (xhr, status, error) {
-                    console.error('Erreur AJAX:', status, error);
+                    // console.error('Erreur AJAX:', status, error);
                 }
             });
         });

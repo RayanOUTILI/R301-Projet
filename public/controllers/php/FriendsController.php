@@ -29,10 +29,10 @@ class FriendsController extends Controller
         session_start();
 
         if (isset($_POST['accept'])) {
-            echo "<script>console.log('accept')</script>";
+            // echo "<script>console.log('accept')</script>";
             $this->_mainDao->acceptFriendsRequest($this->_mainDao->getIdFromMail($_SESSION['adresse_email']), $_POST['username']);
         } else if (isset($_POST['decline'])) {
-            echo "<script>console.log('decline')</script>";
+            // echo "<script>console.log('decline')</script>";
             $this->_mainDao->declineFriendsRequest($this->_mainDao->getIdFromMail($_SESSION['adresse_email']), $_POST['username']);
         }
 
@@ -42,7 +42,7 @@ class FriendsController extends Controller
 
         $this->FriendsView->render($variables);
 
-        echo "<script>console.log('friendRequest() called')</script>";
+        // echo "<script>console.log('friendRequest() called')</script>";
 
 
 
